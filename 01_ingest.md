@@ -215,11 +215,16 @@ ORDER BY year desc;
     a. Create **planes_hive** table in an Icebrerg table format
 
 ```
+drop table if exists ${prefix}_airlines.planes_hive;
+
+CREATE TABLE ${prefix}_airlines.planes_hive
+   AS SELECT * FROM ${prefix}_airlines_raw.planes;
 ```
 
    b. Ingest data into the **airports** table from the raw layer airports table
 
 ```
+DESCRIBE FORMATTED ${prefix}_airlines.planes_hive;
 ```
 
    c. Check the table properties to see details for this Iceberg table

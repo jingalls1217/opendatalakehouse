@@ -55,7 +55,7 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'
 STORED AS TEXTFILE LOCATION 's3a://${cdp_environment_name}/trial-odlh-data/airline-demo-data/flights' tblproperties("skip.header.line.count"="1");
 ```
 
-* In **cdp_environment_name** field, enter the environment name captured earlier
+* In the **cdp_environment_name** field, enter the environment name captured earlier
 
 6. To query the newly created table, enter and execute the query below -
 
@@ -75,7 +75,7 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'
 STORED AS TEXTFILE LOCATION 's3a://${cdp_environment_name}/trial-odlh-data/airline-demo-data/planes' tblproperties("skip.header.line.count"="1");
 ```
 
-8. Create **airlines** table by entering and executing the query below -
+8. Create the **airlines** table by entering and executing the query below -
 
 ```
 drop table if exists ${prefix}_airlines_raw.airlines;
@@ -85,7 +85,7 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'
 STORED AS TEXTFILE LOCATION 's3a://${cdp_environment_name}/trial-odlh-data/airline-demo-data/airlines' tblproperties("skip.header.line.count"="1");
 ```
 
-9. Create **airports** table by entering and executing the query below -
+9. Create the **airports** table by entering and executing the query below -
 
 ```
 drop table if exists ${prefix}_airlines_raw.airports;
@@ -95,7 +95,7 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'
 STORED AS TEXTFILE LOCATION 's3a://${cdp_environment_name}/trial-odlh-data/airline-demo-data/airports' tblproperties("skip.header.line.count"="1");
 ```
 
-10. Create Passenger Manifest **unique_tickets** table by entering and executing the query below -
+10. Create the Passenger Manifest **unique_tickets** table by entering and executing the query below -
 
 ```
 drop table if exists ${prefix}_airlines_raw.unique_tickets;
@@ -125,7 +125,7 @@ CREATE DATABASE ${prefix}_airlines;
 
 2. Execute the following below queries to create the **airports** table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
 
-    a. Create **airports** table in an Iceberg table format -
+    a. Create the **airports** table in an Iceberg table format -
 
 ```
 drop table if exists ${prefix}_airlines.airports;

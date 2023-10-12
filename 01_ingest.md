@@ -35,7 +35,7 @@ The primary goal of this is to build an ingestion data pipeline.
 
 ![Screenshot_2023_05_31_at_5_13_36_PM.png](images/Screenshot_2023_05_31_at_5_13_36_PM.png)
 
-4. You will be taken to Impala Editor. Create a database for the **raw layer** this database will be called **<prefix>_airlines_raw** (<prefix> will be replaced with your unique prefix) using the below query - 
+4. You will be taken to Impala Editor. Create a database for the **raw layer** this database will be called **&lt;prefix>_airlines_raw** (&lt;prefix> will be replaced with your unique prefix) using the below query - 
 
 ```
 CREATE DATABASE ${prefix}_airlines_raw;
@@ -113,7 +113,7 @@ tblproperties("skip.header.line.count"="1");
 - The ingested data will be written to Iceberg tables
 - All Iceberg tables will use the Parquet file format, however, you can also use ORC or AVRO file formats for Iceberg tables
 
-1. Now we can create a database for the **Open Data Lakehouse** this database will be called **<prefix>_airlines** (<prefix> will be replaced with your unique prefix) using the below query - 
+1. Now we can create a database for the **Open Data Lakehouse** this database will be called **&lt;prefix>_airlines** (&lt;prefix> will be replaced with your unique prefix) using the below query - 
 
 ```
 CREATE DATABASE ${prefix}_airlines;
@@ -153,7 +153,33 @@ DESCRIBE FORMATTED ${prefix}_airlines.airports;
 SELECT * FROM ${prefix}_airlines.airports LIMIT 10;
 ```
 
-3. Execute the following below queries to create a Partitioned table **flights** in an Iceberg table format by using the **CREATE TABLE, PARTITIONED BY (column_list), STORED AS ICEBERG** syntax
+3. Just like in the previous step execute the following below queries to create the **unique_tickets** table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
+
+    a. Create **unique_tickets** table in an Icebrerg table format
+
+```
+drop table if exists ${prefix}_airlines.unique_tickets;
+
+CREATE TABLE ${prefix}_airlines.unique_tickets
+(
+   ticketnumber BIGINT, leg1flightnum BIGINT, leg1uniquecarrier STRING, leg1origin STRING,
+   leg1dest STRING, leg1month BIGINT, leg1dayofmonth BIGINT,
+   leg1dayofweek BIGINT, leg1deptime BIGINT, leg1arrtime BIGINT,
+   leg2flightnum BIGINT, leg2uniquecarrier STRING, leg2origin STRING,
+   leg2dest STRING, leg2month BIGINT, leg2dayofmonth BIGINT,
+   leg2dayofweek BIGINT, leg2deptime BIGINT, leg2arrtime BIGINT
+)
+STORED AS ICEBERG;
+```
+
+   b. Ingest data into the **unique_tickets** table from the raw layer unique_tickets table
+
+```
+INSERT INTO ${prefix}_airlines.unique_tickets
+   SELECT * FROM ${prefix}_airlines_raw.unique_tickets;
+```
+
+4. Execute the following below queries to create a Partitioned table **flights** in an Iceberg table format by using the **CREATE TABLE, PARTITIONED BY (column_list), STORED AS ICEBERG** syntax
 
     a. Create **flights** table, partitioned by the **year** column, in an Icebrerg table format
 
@@ -212,7 +238,7 @@ ORDER BY year desc;
 - **planes_hive** will be a Managed Hive table
 - To migrate this table to Iceberg we will need to run a CTAS statement (**CREATE TABLE AS SELECT, STORED AS ICEBERG** syntax)
 
-    a. Create **planes_hive** table in an Icebrerg table format
+    a. Create **planes_hive** managed table in Hive table format, this will simulate an existing Impala implementation where tables have been created in a Hive table format
 
 ```
 drop table if exists ${prefix}_airlines.planes_hive;
@@ -221,29 +247,28 @@ CREATE TABLE ${prefix}_airlines.planes_hive
    AS SELECT * FROM ${prefix}_airlines_raw.planes;
 ```
 
-   b. Ingest data into the **airports** table from the raw layer airports table
+   b. Check the table properties to see details for this Hive table
 
 ```
 DESCRIBE FORMATTED ${prefix}_airlines.planes_hive;
 ```
 
-   c. Check the table properties to see details for this Iceberg table
+   c. Migrate **planes_hive** table from Hive table format to Iceberg table format using **CREATE TABLE AS SELECT, STORED AS ICEBERG*** syntax
 
 ```
+drop table if exists ${prefix}_airlines.planes;
+
+CREATE TABLE ${prefix}_airlines.planes 
+STORED AS ICEBERG 
+TBLPROPERTIES ('format-version'='2')
+   AS SELECT * FROM ${prefix}_airlines.planes_hive;
 ```
 
-   d. Query the newly created table, execute the below query - 
+   d. Check the table properties to see details for this Hive table 
 
 ```
+DESCRIBE FORMATTED ${prefix}_airlines.planes;
 ```
-
-
-
-
-
-
-
-
 
 
 We are now ready to [Analyze](02_analyze.md), [Visualize](03_visualize.md) and [Predict](04_predict.md) Data!

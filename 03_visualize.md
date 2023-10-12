@@ -1,12 +1,56 @@
 # 03_visualize
 
-# Embedded Data Visualizations
+In this phase we will be working to create a Dashboard using the Data Lakehouse we created in the 01_ingest phase.
+
+This will be the Pre-requisite to the [04_predict](04_predict.md) phase as we will be deploying an end\-to\-end machine learning project used in that phase.
 
 ## Pre-requisite
 
 1. Please ensure that you have completed the [labs](01_ingest.md#01_ingest) to ingest data needed for Visualization.
 
-## Lab 1: Enable data visualization:
+# Cloudera Machine Learning (CML) Project
+
+## Lab 1: Deploy Machine Leaning Applied Machine Learning Prototype (AMP)
+
+1. Open Cloudera Machine Learning (CML)
+
+   You can always go back to CDP Home Page by clicking the bento menu icon in the top left corner of Data Hub page or Cloudera Machine Learning page
+
+![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_2023_04_24_at_11_33_56_PM.png)
+
+2. Select Machine Learning in Cloudera Data Platform Home Page
+
+![Screen_Shot_2023_04_24_at_11_42_33_PM.png](images/Screen_Shot_2023_04_24_at_11_42_33_PM.png)
+
+3. Note the **Environment Name** as it will be used as one of the inputs while we create our Machine Learning model.
+
+![Screen_Shot_2023_04_24_at_11_37_42_PM.png](images/Screen_Shot_2023_04_24_at_11_37_42_PM.png)
+
+4. Click on the workspace available in your Machine Learning Page
+
+5. Once inside your workspace, Click AMPs in the left menu
+-- need screenshot of left nav --
+
+6. Cloudera Machine Learning (CML) will show you a catalog of available Machine Learning Prototypes
+
+7. Search for Canceled Flight Prediction prototype in the search box, click the prototype
+-- need screenshot of AMP to select --
+
+We have now created a Cloudera Machine Learning (CML) Project that will be populated with all of the content making up the AMP we just deployed.  This includes: data, code, files, model definition, 
+
+## Lab 2: Configure and Deploy AMP
+
+1. Create a Cloudera Machine Learning (CML) Project
+
+   h. Now click Configure Project
+   i. Wait for the Project to be created on the Project page \(takes a few seconds to load the code locally\)
+
+![Screen_Shot_2023_04_24_at_11_49_32_PM.png](images/Screen_Shot_2023_04_24_at_11_49_32_PM.png)
+
+
+# Embedded Data Visualizations
+
+## Lab 3: Enable data visualization:
 
 1. Go to your Machine Learning workspace
 2. Now create a `New Project` and name it `Embedded-DataViz` . Leave the other fields as is and click `Create Project`
@@ -18,7 +62,7 @@ It will take a few minutes for the data application to launch.
 
 ---
 
-## Lab 2: Create a dataset
+## Lab 4: Create a dataset
 
 In this lab, we will create a dataset that contains a correlation across the various datasets we have ingested and prepare for creating visualizations.
 
@@ -48,7 +92,7 @@ INNER JOIN airlines.airports D ON A.dest = D.iata
 
 7. Click `Create`
 
-## Lab 3: Create a dashboard
+## Lab 5: Create a dashboard
 
 In this lab, we will create a sample dashboard to visualize the reports for a business user.
 

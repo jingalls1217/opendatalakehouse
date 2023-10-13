@@ -2,11 +2,61 @@
 
 In this phase we will be working to create a Dashboard using the Data Lakehouse we created in the 01_ingest phase.
 
-This will be the Pre-requisite to the [04_predict](04_predict.md) phase as we will be deploying an end\-to\-end machine learning project used in that phase.
+In this phase we will be deploying an end\-to\-end machine learning project that will also be used in the next phase [04_predict](04_predict.md).
 
-## Pre-requisite
+## Pre-requisites
 
 1. Please ensure that you have completed the [labs](01_ingest.md#01_ingest) to ingest data needed for Visualization.
+
+2. Set your CDP Workload Password
+   a. On your browser navigate back to the CDP Management Console
+
+![Return_to_cdp.png](images/Return_to_cdp.png)
+
+   b. Go back to CDP Home Page by clicking the bento menu icon in the top left corner of the Data Hub page
+
+![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_2023_04_24_at_11_33_56_PM.png)
+
+   b. In the bottom left corner find your user id and click on it, in the pop up click on `Profile`
+
+![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_User_Profile.png)
+
+   c. On the User Profile page, click on `Set Workload Password`
+
+![Screen_Shot_Set_Workload_pw.png](images/Screen_Shot_Set_Workload_pw.png)
+
+   d. Enter a strong password, confirm it and click on `Set Workload Password`
+
+![Screen_Shot_Reset_WL_pw.png](images/Screen_Shot_Reset_WL_pw.png)
+
+   e. You should see a message that the Workload password has been updated.
+
+![Screen_Shot_Reset_WL_success.png](images/Screen_Shot_Reset_WL_success.png)
+
+3. In Cloudera Machine Learning (CML) provide your CDP Workload Password
+
+   a. Open Cloudera Machine Learning (CML)
+      * Click the bento menu icon in the top left corner and select `Machine Learning`
+
+![Menu_nav2_CML.png](images/Menu_nav2_CML.png)
+
+   b. Note the **Environment Name**, under `Environment`, as it will be used as one of the inputs while we create our Machine Learning model.
+
+![Screen_Shot_2023_04_24_at_11_37_42_PM.png](images/Screen_Shot_2023_04_24_at_11_37_42_PM.png)
+
+   c. Click on the Workspace available in your Machine Learning page.  This is found under `Worksapce`
+
+   d. Click on your user id in the top right corner, and click
+
+![Screen_Shot_cml_user_acct_setting.png](images/Screen_Shot_cml_user_acct_setting.png)
+
+   e. On the User Profile page, click on the `Environment Variables` tab
+
+![Screen_Shot_CML_User_Settings.png](images/CML_User_Settings.png)
+
+   f. Enter your Workload Password from **Step 2** in `WORKLOAD_PASSWORD` and click `Save`
+
+![Screen_Shot_CML_Set_WL_pw.png](images/Screen_Shot_CML_Set_WL_pw.png)
 
 # Cloudera Machine Learning (CML) Project
 
@@ -14,71 +64,108 @@ This will be the Pre-requisite to the [04_predict](04_predict.md) phase as we wi
 
 1. Open Cloudera Machine Learning (CML)
 
-   You can always go back to CDP Home Page by clicking the bento menu icon in the top left corner of Data Hub page or Cloudera Machine Learning page
+   * If you just completed providing our Workload Password to CML, in the left nav click on Home.
 
+   * If not, you can always go back to CDP Home Page by clicking the bento menu icon in the top left corner, click on Home, select the `Machine Learning` tile, and click on the Workspace available in your Machine Learning page (found under `Workspace`).  
 ![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_2023_04_24_at_11_33_56_PM.png)
-
-2. Select Machine Learning in Cloudera Data Platform Home Page
-
 ![Screen_Shot_2023_04_24_at_11_42_33_PM.png](images/Screen_Shot_2023_04_24_at_11_42_33_PM.png)
-
-3. Note the **Environment Name** as it will be used as one of the inputs while we create our Machine Learning model.
-
 ![Screen_Shot_2023_04_24_at_11_37_42_PM.png](images/Screen_Shot_2023_04_24_at_11_37_42_PM.png)
 
-4. Click on the workspace available in your Machine Learning Page
+2. Click AMPs in the left menu
 
-5. Once inside your workspace, Click AMPs in the left menu
--- need screenshot of left nav --
+![Screen_Shot_left_nav_AMPs.png](images/Screen_Shot_left_nav_AMPs.png)
 
-6. Cloudera Machine Learning (CML) will show you a catalog of available Machine Learning Prototypes
+3. Cloudera Machine Learning (CML) will show you a catalog of available Machine Learning Prototypes
 
-7. Search for Canceled Flight Prediction prototype in the search box, click the prototype
--- need screenshot of AMP to select --
+4. Search for Canceled Flight Prediction prototype by entering `cancel` in the search box and click the prototype tile
 
-We have now created a Cloudera Machine Learning (CML) Project that will be populated with all of the content making up the AMP we just deployed.  This includes: data, code, files, model definition, 
+![Screen_Shot_search_for_Cancel_Pred_AMP.png](images/Screen_Shot_search_for_Cancel_Pred_AMP.png)
 
-## Lab 2: Configure and Deploy AMP
+5. Now click `Configure Project`
 
-1. Create a Cloudera Machine Learning (CML) Project
+![Screen_Shot_AMP_Configure_Project.png](images/Screen_Shot_AMP_Configure_Project.png)
 
-   h. Now click Configure Project
-   i. Wait for the Project to be created on the Project page \(takes a few seconds to load the code locally\)
+6. Wait for the Project to be created on the Project page \(takes a few seconds to load the code locally\)
 
-![Screen_Shot_2023_04_24_at_11_49_32_PM.png](images/Screen_Shot_2023_04_24_at_11_49_32_PM.png)
+![Screen_Shot_CML _Projects_page.png](images/Screen_Shot_CML_Projects_page.png)
 
+We have now created a Cloudera Machine Learning (CML) Project that will be populated with all of the content making up the AMP we just deployed.  This includes: data, code, files, model definition, and an Flask application.
 
-# Embedded Data Visualizations
+## Lab 2: Configure and Deploy Canceled Flight Prediction AMP
 
-## Lab 3: Enable data visualization:
+1. Open the created Cloudera Machine Learning (CML) Project you just created, named "Canceled Flight Prediction - &lt;user-id>" by clicking on the Project tile
 
-1. Go to your Machine Learning workspace
-2. Now create a `New Project` and name it `Embedded-DataViz` . Leave the other fields as is and click `Create Project`
-3. On the left pane, you will see a tab called `Data` and then `Launch Data Application`.
+![Screen_Shot_CML_Projects_page.png](images/Screen_Shot_CML_Projects_page.png)
 
-It will take a few minutes for the data application to launch.
+2. CML will now give a series of Environment Variables for the user to fill in. Fill as below:
+    * `STORAGE_MODE` as local
+    * `SPARK_CONNECTION_NAME` with the Environment Name we collected above.
+    * `DW_DATABASE` as `<prefix>_airlines` - where &lt;prefix> is the same &lt;prefix> you used in the 01_ingest phase
+    * `DW_TABLE` as `flights`
+    * `USE_PREBUILT_MODEL` as `no`
+    * Enable the button next to `Enable Spark`
 
-![Screen_Shot_2022-09-01_at_1-11-48_PM.png](images/Screen_Shot_2022-09-01_at_1-11-48_PM.png)
+3. Leave the rest of the fields to be default.
+
+4. Click `Launch Project`
+   * Takes a few minutes to run the Jobs to build and deploy an end\-to\-end machine learning project)
+
+![Screen_Shot_AMP_Configuration_Settings.png](images/Screen_Shot_AMP_Configuration_Settings.png)
+
+Cloudera Machine Learning will automatically execute the following 10 steps:
+
+`Step 1:` Job to install dependencies
+
+`Step 2:` Running install dependencies job
+
+`Step 3:` Job to process raw data files
+
+`Step 4:` Running job to process raw data files
+
+`Step 5:` Job to train model
+
+`Step 6:` Run model training job
+
+`Step 7:` Create the flight delay prediction model api endpoint
+
+`Step 8:` Build model
+
+`Step 9:` Deploy model
+
+`Step 10:` Start Application
+
+You can follow the step being executed by clicking on the `View details` page to see the progress and what the prototype execution looks like in the background.
+
+All the steps above should be successful before proceeding to the next steps. It takes roughly 8 minutes for the prototype to be deployed.  You should see a `Completed all steps` message above the executed steps.
+
+![Screen_Shot_Completed_AMP_run.png](images/Screen_Shot_Completed_AMP_run.png)
 
 ---
 
-## Lab 4: Create a dataset
+# Embedded Data Visualizations
+
+## Lab 3: Create a dataset
 
 In this lab, we will create a dataset that contains a correlation across the various datasets we have ingested and prepare for creating visualizations.
 
-1. Once you create a project as described in `Lab 1`, click on the `Data` tab then on `All Connections` tab. You should see a connection containing the name `dwarehouse`. Click this.
-2. You may see an error - `Could not read a list of databases`. This is due to **Workload Password** not being set. Based on the instructions to update your "WORKLOAD_PASSWORD", please update workload password and restart the application.
-    
-    * Note that you will need to setup the workload password in **two** places
-        * In the Control Plane - From CDP Home Page, by clicking on your profile in the left bottom of the page, it will take you to User Management screen in Cloudera Management Console. Head back to Cloudera Machine Learning (CML).
-        * In CML User Settings (User Settings is the last menu item in your Machine Learning Workspace) - Save the WORKLOAD_PASSWORD again in Environment Variables tab
+1. Once you finished setting up the `Canceled Flight Prediction` Machine Learning projectas described in `Lab 2`.  You will be ready to start Data Visualization, click on the `Data` tab from the left nav.  Under 'Recent Connections' you should see a connection containing the name `dwarehouse`.
 
-![workload_passowrd_image.png](images/workload_passowrd_image.png)
+![Screen_Shot_cml_cdv_home.png](images/Screen_Shot_cml_cdv_home.png)
 
-3. Now click `New Dataset`
-4. `Dataset title` as `airlines-master`
-5. `Data Source` as `From SQL`
-6. Enter the below SQL query into the field:
+2. Now click `New Dataset`
+
+3. `Dataset title` as `<prefix>-airlines-master`, replace &lt;prefix> with your prefix you used in 01_ingest phase
+
+--
+--
+-- the following will change from SQL to Tables & Joins --
+4. `Data Source` allows you to choose between directly entering SQL or selecting tables from our Data Lakehouse.  Select `From table`
+
+
+-- not done yet --
+4. `Data Source` as `From SQL`
+
+5. Enter the below SQL query into the field:
 
 ```
 select B.description as 'carrier', C.city as 'origincity', D.city 'destinationcity', A.*,
@@ -92,7 +179,7 @@ INNER JOIN airlines.airports D ON A.dest = D.iata
 
 7. Click `Create`
 
-## Lab 5: Create a dashboard
+## Lab 4: Create a dashboard
 
 In this lab, we will create a sample dashboard to visualize the reports for a business user.
 

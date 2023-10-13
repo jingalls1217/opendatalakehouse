@@ -1,10 +1,13 @@
 # 04_predict
 
-In this lab, we will build an end\-to\-end machine learning project using Cloudera Machine Learning. The primary goal of this project is to build a gradient boosted \(XGBoost\) classification model to predict the likelihood of a flight being canceled based on years of historical records. To achieve that goal, this project demonstrates the end\-to\-end Machine Learning journey for model training and inference using Spark on CML. Additionally, this project deploys a hosted model and front\-end application to allow users to interact with the trained model.
+In this lab, we will explore and test the end\-to\-end machine learning project we created in [03_visualize Lab 1](03_visualize.md#lab-1-deploy-machine-leaning-applied-machine-learning-prototype-amp) using Cloudera Machine Learning (CML).
+
+The primary goal of this project that we deployed is to build a gradient boosted \(XGBoost\) classification model to predict the likelihood of a flight being canceled based on years of historical records. To achieve that goal, this project demonstrates the end\-to\-end Machine Learning journey for model training and inference using Spark on CML. Additionally, this project deploys a hosted model and front\-end application to allow users to interact with the trained model.
 
 ## Pre-requisite
 
-1. Please ensure that you have completed the [lab](01_ingest.md#lab-1-ingest-flights-data-needed-for-prediction) to ingest data needed for Prediction.
+1. Please ensure that you have completed the [03_visualize Lab 1](03_visualize.md#lab-1-deploy-machine-leaning-applied-machine-learning-prototype-amp) to deploy the Applied Machine Learning Prototype (AMP) for `Canceled Flight Predicion`.
+
 
 ## Lab 1
 
@@ -16,12 +19,13 @@ You can always go back to CDP Home Page by clicking the bento menu icon in the t
 
 ![Screen_Shot_2023_04_24_at_11_42_33_PM.png](images/Screen_Shot_2023_04_24_at_11_42_33_PM.png)
 
-2. Note the **Environment Name** as it will be used as one of the inputs while we create our Machine Learning model.
+2. Click on the workspace available in your Machine Learning Page
 
-![Screen_Shot_2023_04_24_at_11_37_42_PM.png](images/Screen_Shot_2023_04_24_at_11_37_42_PM.png)
+3. Once inside your workspace, click on the 
 
-3. Click on the workspace available in your Machine Learning Page
-4. Once inside your workspace, Click AMPs in the left menu
+
+
+
 5. Cloudera Machine Learning\(CML\) will show you a catalog of available Machine Learning Prototypes
 6. Search for Canceled Flight Prediction prototype in the search box, click the prototype
 7. Now click Configure Project
@@ -30,42 +34,6 @@ You can always go back to CDP Home Page by clicking the bento menu icon in the t
 ![Screen_Shot_2023_04_24_at_11_49_32_PM.png](images/Screen_Shot_2023_04_24_at_11_49_32_PM.png)
 
 1. Once complete, click on the project we just created
-2. CML will now gives a series of Environment Variables for the user to fill in. Fill as below:
-    1. `STORAGE_MODE` as external
-    2. `SPARK_CONNECTION_NAME` with the Environment Name we collected above.
-    3. `DW_DATABASE` as `airlines`
-    4. `DW_TABLE` as `flights`
-    5. `USE_PREBUILT_MODEL` as `yes`
-3. Leave the rest of the fields to be default.
-4. Click Launch Project
-
-![Screen_Shot_2023_04_24_at_11_53_16_PM.png](images/Screen_Shot_2023_04_24_at_11_53_16_PM.png)
-
-Cloudera Machine Learning will automatically execute the following 10 steps:
-
-`Step 1:` Job to install dependencies
-
-`Step 2:` Running install dependencies job
-
-`Step 3:` Job to process raw data files
-
-`Step 4:` Running job to process raw data files
-
-`Step 5:` Job to train model
-
-`Step 6:` Run model training job
-
-`Step 7:` Create the flight delay prediction model api endpoint
-
-`Step 8:` Build model
-
-`Step 9:` Deploy model
-
-`Step 10:` Start Application
-
-You can follow the step being executed by clicking on the `view details` page to see the progress and what the prototype execution looks like in the background.
-
-All the steps above should be successful before proceeding to the next steps. It takes roughly 8 minutes for the prototype to be deployed.
 
 ## Lab 2
 

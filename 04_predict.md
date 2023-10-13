@@ -9,35 +9,24 @@ The primary goal of this project that we deployed is to build a gradient boosted
 1. Please ensure that you have completed the [03_visualize Lab 1](03_visualize.md#lab-1-deploy-machine-leaning-applied-machine-learning-prototype-amp) to deploy the Applied Machine Learning Prototype (AMP) for `Canceled Flight Predicion`.
 
 
-## Lab 1
+## Lab 1 - Explore Machine Learning Project
 
-You can always go back to CDP Home Page by clicking the bento menu icon in the top left corner of Data Hub page or Cloudera Machine Learning page
+1. Open Cloudera Machine Learning (CML)
 
+   * If you just completed the [03_visualize](03_visualize.md#03_visualize) phase, in the left nav click on Home.
+
+   * If not, you can always go back to CDP Home Page by clicking the bento menu icon in the top left corner, click on Home, select the `Machine Learning` tile, and click on the Workspace available in your Machine Learning page (found under `Workspace`).  
 ![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_2023_04_24_at_11_33_56_PM.png)
-
-1. Select Machine Learning in Cloudera Data Platform Home Page
-
 ![Screen_Shot_2023_04_24_at_11_42_33_PM.png](images/Screen_Shot_2023_04_24_at_11_42_33_PM.png)
+![Screen_Shot_2023_04_24_at_11_37_42_PM.png](images/Screen_Shot_2023_04_24_at_11_37_42_PM.png)
 
-2. Click on the workspace available in your Machine Learning Page
+--
+--
+-- Looking to explain everything that was loaded when the AMP was deployed in a few steps here - files, data, and code (model and App are in the next 2 labs already)
+2.
 
-3. Once inside your workspace, click on the 
 
-
-
-
-5. Cloudera Machine Learning\(CML\) will show you a catalog of available Machine Learning Prototypes
-6. Search for Canceled Flight Prediction prototype in the search box, click the prototype
-7. Now click Configure Project
-8. Wait for the Project to be created on the Project page \(takes a few seconds to load the code locally\)
-
-![Screen_Shot_2023_04_24_at_11_49_32_PM.png](images/Screen_Shot_2023_04_24_at_11_49_32_PM.png)
-
-1. Once complete, click on the project we just created
-
-## Lab 2
-
-Exploring the deployed model
+## Lab 2 - Explore and test the deployed model
 
 1. Go to the `Projects` page and click on the project we created now.
 2. One of the steps that AMP executed was productionalize the model and make accessible via a REST API.
@@ -48,7 +37,7 @@ Exploring the deployed model
 
 ![Screen_Shot_2023_04_25_at_12_03_54_AM.png](images/Screen_Shot_2023_04_25_at_12_03_54_AM.png)
 
-## Lab 3
+## Lab 3 - Explore and test the Application
 
 The AMP deployed a visual dashboard to expose the results from the Machine Learning pipeline for the business users. In this lab, we will access the Analytical Application
 

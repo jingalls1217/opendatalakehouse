@@ -11,7 +11,7 @@ In this phase we will be deploying an end\-to\-end machine learning project that
 2. Set your CDP Workload Password
    a. On your browser navigate back to the CDP Management Console
 
-![Screen_Shot_return_to_cdp.png](images/Screen_Shot_return_to_cdp.png)
+![Return_to_cdp.png](images/Return_to_cdp.png)
 
    b. Go back to CDP Home Page by clicking the bento menu icon in the top left corner of the Data Hub page
 
@@ -38,7 +38,7 @@ In this phase we will be deploying an end\-to\-end machine learning project that
    a. Open Cloudera Machine Learning (CML)
       * Click the bento menu icon in the top left corner and select `Machine Learning`
 
-![Screen_Shot_Menu_nav2_CML.png](images/Screen_Shot_Menu_nav2_CML.png)
+![Menu_nav2_CML.png](images/Menu_nav2_CML.png)
 
    b. Note the **Environment Name**, under `Environment`, as it will be used as one of the inputs while we create our Machine Learning model.
 
@@ -52,7 +52,7 @@ In this phase we will be deploying an end\-to\-end machine learning project that
 
    e. On the User Profile page, click on the `Environment Variables` tab
 
-![Screen_Shot_CML_User_Settings.png](images/Screen_Shot_CML_User_Settings.png)
+![Screen_Shot_CML_User_Settings.png](images/CML_User_Settings.png)
 
    f. Enter your Workload Password from **Step 2** in `WORKLOAD_PASSWORD` and click `Save`
 
@@ -159,6 +159,10 @@ In this lab, we will create a dataset that contains a correlation across the var
 --
 --
 -- the following will change from SQL to Tables & Joins --
+4. `Data Source` allows you to choose between directly entering SQL or selecting tables from our Data Lakehouse.  Select `From table`
+
+
+-- not done yet --
 4. `Data Source` as `From SQL`
 
 5. Enter the below SQL query into the field:

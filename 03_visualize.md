@@ -148,38 +148,109 @@ All the steps above should be successful before proceeding to the next steps. It
 
 As part of deploying the AMP `Canceled Flight Prediction`, a Data Visualization application has been enabled.  We will dive into this Project in more detail in the [04_predict](04_predict.md#04_predict) phase.
 
-In this lab, we will leverage the Data Visualization application to create a dataset that contains a correlation across the various datasets we have ingested into our Data Lakehouse and prepare for creating visualizations.
+In this lab, we will leverage the Data Visualization application to create a `Dataset` that contains a correlation across the various datas we have ingested into our Data Lakehouse and prepare for creating visualizations.  
+
+A `Dataset`, aka Data Model, is a logical representation of the data you want to use to build visuals. It is a logical pointer to a physical table or a defined structure in your data source. Datasets may represent the contents of a single data table or a data matrix from several tables that may be in different data stores on the same connection.
 
 1. Once you finished setting up the `Canceled Flight Prediction` Machine Learning project as described in `Lab 2`.  You will be ready to start Data Visualization, click on the `Data` tab from the left nav.  Under 'Recent Connections' you should see a connection containing the name `dwarehouse`.
 
 ![Screen_Shot_cml_cdv_home.png](images/Screen_Shot_cml_cdv_home.png)
 
-2. Now click `New Dataset`
+2. On the top, click `DATASETS`
+   * In this Lab the Dataset we want to create will join the `flights` Iceberg table to the `aiprorts` Iceberg table for the Origin Airport details and again for the Destination Airport details 
+![CDV_erd.png](images/CDV_erd.png)
 
-3. `Dataset title` as `<prefix>-airlines-master`, replace &lt;prefix> with your prefix you used in 01_ingest phase
+3. Now click `New Dataset`
+   * `Dataset title` as `<prefix>-airlines-master`, replace &lt;prefix> with your prefix you used in 01_ingest phase
 
---
---
--- the following will change from SQL to Tables & Joins --
-4. `Data Source` allows you to choose between directly entering SQL or selecting tables from our Data Lakehouse.  Select `From table`
+   * `Dataset Source` allows you to choose between directly entering SQL or selecting tables from our Data Lakehouse.  Select `From Table`
+
+   * In `Select Database` choose the `<prefix>_airlines` database you created in 01_ingest
+   * In `Select Table` choose the `flights` Iceberg table
+
+   * Click `CREATE` to create the Dataset (Data Model)
+
+--Need screenshot--
+
+4. You will be taken back to the Datasets tab.  Under Title/Table, you will see the `<prefix>-airlines-master` Dataset we just created, click on it to open the Dataset.
+
+5. On the left nav, click on `Data Model`.
+
+--Need screenshot--
+
+6. To Join tables to the flights table, click on `EDIT DATA MODEL`
+![CDV_data_model.png](images/CDV_data_model.png)
+
+7. Click the `+` to the right of the flights table to join a table
+
+   * In `Database Name` choose the `<prefix>_airlines` database you created in 01_ingest
+
+   * In `Table Name` choose the `airlines` table
+
+   * Click on `SELECT`
+
+--Need screenshot--
+
+8. `Edit Join` pop up
+   * Under `<prefix>_airlines.flights` choose `uniquecarrier` from the drop down
+
+   * Under `<prefix>_airlines.airlines` choose `code` from the drop down
+
+--Need screenshot--
+
+9. Click the `+` to the right of the flights table to join a table
+
+   * In `Database Name` choose the `<prefix>_airlines` database you created in 01_ingest
+
+   * In `Table Name` choose the `airports` table
+
+   * Click on `SELECT`
+
+--Need screenshot--
+
+10. `Edit Join` pop up
+   * Under `<prefix>_airlines.flights` choose `origin` from the drop down
+
+   * Under `<prefix>_airlines.airports` choose `iata` from the drop down
+
+--Need screenshot--
+
+11. Click the `+` to the right of the flights table to join a table
+
+   * In `Database Name` choose the `<prefix>_airlines` database you created in 01_ingest
+
+   * In `Table Name` choose the `airports` table
+
+   * Click on `SELECT`
+
+--Need screenshot--
+
+12. `Edit Join` pop up
+   * Under `<prefix>_airlines.flights` choose `dest` from the drop down
+
+   * Under `<prefix>_airlines.airports` choose `iata` from the drop down
+
+--Need screenshot--
+
+13. To test the Joins are working, click on `SHOW DATA`, you will see a table of data representing the flights table being joined to the airports table for the Origin and Destination airport details
+
+--Need screenshot--
+
+14. Click `SAVE`
+
+15. 
 
 
--- not done yet --
-4. `Data Source` as `From SQL`
 
-5. Enter the below SQL query into the field:
 
-```
-select B.description as 'carrier', C.city as 'origincity', D.city 'destinationcity', A.*,
-CAST(CONCAT(CAST(`year` AS STRING) , '-', CAST(`month` AS STRING), '-', CAST(`dayofmonth` AS STRING))
-AS DATE FORMAT 'yyyy-mm-dd') as flightdate
-from airlines.flights A
-INNER JOIN airlines.airlines B ON A.uniquecarrier = B.code
-INNER JOIN airlines.airports C ON A.origin = C.iata
-INNER JOIN airlines.airports D ON A.dest = D.iata
-```
+15. Let's add a `flightdate` derived field, on the left nav, click `Fields`
+   * Sometimes the data in the base tables does not support needs, in this data there is no timestamp representing the flight date. So, instead of having to derive one everytime a visualization is created we can add a calculated field to the Dataset.
 
-7. Click `Create`
+16. Click on `EDIT FIELDS`
+
+17. 
+
+18.
 
 ## Lab 4: Create a dashboard
 

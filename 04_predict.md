@@ -14,6 +14,7 @@ The primary goal of this project that we deployed is to build a gradient boosted
 1. Open Cloudera Machine Learning (CML) `Canceled Flight Prediction` project Overview page
 
    * If you just completed the [03_visualize](03_visualize.md#03_visualize) phase, in the left nav click on Overview.
+
 ![CML_Overview_left_nav.png](images/CML_Overview_left_nav.png)
 
    * If not, you can always go back to CDP Home Page by clicking the bento menu icon in the top left corner, click on Home, select the `Machine Learning` tile, click on the Workspace available in your Machine Learning page (found under `Workspace`), find and select the `Canceled Flight Prediction` project tile.  
@@ -38,14 +39,14 @@ The primary goal of this project that we deployed is to build a gradient boosted
 ![AMP_models.png](images/AMP_models.png)
 
       * `Jobs` - 
-      can be used to orchestrate an entire end-to-end automated pipeline, including monitoring for model drift and automatically kicking off model re-training and re-deployment as needed.
+      - can be used to orchestrate an entire end-to-end automated pipeline, including monitoring for model drift and automatically kicking off model re-training and re-deployment as needed.
 ![AMP_jobs.png](images/AMP_jobs.png)
 
       * `Files` - 
 ![AMP_files.png](images/AMP_files.png)
 
       * `Applications` - 
-      deliver interactive experiences for business users in a matter of clicks. Frameworks such as Flask and Shiny can be used in development of these Applications, while Cloudera Data Visualization is also available as a point-and-click interface for building these experiences
+      - deliver interactive experiences for business users in a matter of clicks. Frameworks such as Flask and Shiny can be used in development of these Applications, while Cloudera Data Visualization is also available as a point-and-click interface for building these experiences
 
 
       * `README.md` for Canceled Flight Prediction project that describes what this model is trying to accomplish and how to use it.

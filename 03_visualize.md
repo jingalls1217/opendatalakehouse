@@ -146,9 +146,11 @@ All the steps above should be successful before proceeding to the next steps. It
 
 ## Lab 3: Create a dataset
 
-In this lab, we will create a dataset that contains a correlation across the various datasets we have ingested and prepare for creating visualizations.
+As part of deploying the AMP `Canceled Flight Prediction`, a Data Visualization application has been enabled.  We will dive into this Project in more detail in the [04_predict](04_predict.md#04_predict) phase.
 
-1. Once you finished setting up the `Canceled Flight Prediction` Machine Learning projectas described in `Lab 2`.  You will be ready to start Data Visualization, click on the `Data` tab from the left nav.  Under 'Recent Connections' you should see a connection containing the name `dwarehouse`.
+In this lab, we will leverage the Data Visualization application to create a dataset that contains a correlation across the various datasets we have ingested into our Data Lakehouse and prepare for creating visualizations.
+
+1. Once you finished setting up the `Canceled Flight Prediction` Machine Learning project as described in `Lab 2`.  You will be ready to start Data Visualization, click on the `Data` tab from the left nav.  Under 'Recent Connections' you should see a connection containing the name `dwarehouse`.
 
 ![Screen_Shot_cml_cdv_home.png](images/Screen_Shot_cml_cdv_home.png)
 

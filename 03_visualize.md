@@ -241,19 +241,30 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
 
 14. Click `SAVE`
 
-15. 
+15. Click on `Fields` in the left nav
 
-
-
-
-15. Let's add a `flightdate` derived field, on the left nav, click `Fields`
-   * Sometimes the data in the base tables does not support needs, in this data there is no timestamp representing the flight date. So, instead of having to derive one everytime a visualization is created we can add a calculated field to the Dataset.
+--Need Screenshot--
 
 16. Click on `EDIT FIELDS`
 
-17. 
+17. Click the `Mea` toggle button next to `month`
+   * Cloudera Data Visualization (CDV) will try to classify the columns from each table into a Category (ie. Dimension or Measure)
+   * This is important as CDV will use this information to assiting in easing repetive work and simplify building visuals
+      * Dimensions - data that you will not usually aggregate and instead will 
+      * Measures - would be fields that you would be aggregating (sum, count, average, etc.)
 
-18.
+--Need Screenshot--
+
+16. 
+
+
+19. Let's add a `flightdate` derived field
+   * Sometimes the data in the base tables does not support needs, in this data there is no timestamp representing the flight date. So, instead of adding these expressions for every visual created.
+
+
+21. 
+
+22.
 
 ## Lab 4: Create a dashboard
 

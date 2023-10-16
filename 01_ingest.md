@@ -125,7 +125,7 @@ CREATE DATABASE ${prefix}_airlines;
 
 2. Execute the following below queries to create the **airports** table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
 
-    a. Create the **airports** table in an Iceberg table format -
+    a. Create the **airports** table in an Iceberg table format
 
 ```
 drop table if exists ${prefix}_airlines.airports;
@@ -136,22 +136,22 @@ CREATE TABLE ${prefix}_airlines.airports (
 STORED AS ICEBERG;
 ```
 
-   b. Ingest data into the **airports** table from the raw layer airports table -
+   b. Ingest data into the **airports** table from the raw layer airports table
 
 ```
 INSERT INTO ${prefix}_airlines.airports
    SELECT * FROM ${prefix}_airlines_raw.airports;
 ```
 
-   c. Check the table properties to see details for this Iceberg table -
+   c. Check the table properties to see details for this Iceberg table
 
 ```
 DESCRIBE FORMATTED ${prefix}_airlines.airports;
 ```
-![Airports Iceberg Table](/images/airports_iceberg_describe_formatted.png)
+   * In the screenshot below there are few things to pay attention to which are the Location, Table Type, and Metadata Location fields and values.
+![Describe Formatted Airports Iceberg Table](/images/airports_iceberg_describe_formatted.png)
 
-
-   d. Query the newly created table, execute the below query - 
+   d. Query the newly created table, execute the below query
 
 ```
 SELECT * FROM ${prefix}_airlines.airports LIMIT 10;
@@ -160,7 +160,7 @@ SELECT * FROM ${prefix}_airlines.airports LIMIT 10;
 
 3. Execute the following below queries to create the **airlines** table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
 
-    a. Create the **airlines** table in an Iceberg table format -
+    a. Create the **airlines** table in an Iceberg table format
 
 ```
 drop table if exists ${prefix}_airlines.airlines;
@@ -171,14 +171,14 @@ CREATE TABLE ${prefix}_airlines.airlines (
 STORED AS ICEBERG;
 ```
 
-   b. Ingest data into the **airlines** table from the raw layer airports table -
+   b. Ingest data into the **airlines** table from the raw layer airports table
 
 ```
 INSERT INTO ${prefix}_airlines.airlines
    SELECT * FROM ${prefix}_airlines_raw.airlines;
 ```
 
-   c. Query the newly created table, execute the below query - 
+   c. Query the newly created table, execute the below query
 
 ```
 SELECT * FROM ${prefix}_airlines.airlines LIMIT 10;
@@ -186,7 +186,7 @@ SELECT * FROM ${prefix}_airlines.airlines LIMIT 10;
 
 4. Just like in the previous step execute the following below queries to create the **unique_tickets** table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
 
-    a. Create **unique_tickets** table in an Iceberg table format -
+    a. Create **unique_tickets** table in an Iceberg table format
 
 ```
 drop table if exists ${prefix}_airlines.unique_tickets;
@@ -212,7 +212,7 @@ INSERT INTO ${prefix}_airlines.unique_tickets
 
 5. Execute the following below queries to create a partitioned **flights** table with an Iceberg table format by using the **CREATE TABLE, PARTITIONED BY (column_list), STORED AS ICEBERG** syntax
 
-    a. Create a **flights** table, partitioned by the **year** column, with an Icebrerg table format -
+    a. Create a **flights** table, partitioned by the **year** column, with an Icebrerg table format
 
 ```
 DROP TABLE IF EXISTS ${prefix}_airlines.flights;
@@ -264,7 +264,7 @@ ORDER BY year desc;
 
 ![Query Flights](/images/query.airlines.flights.png)
 
-- Notice that flight volume has grown quite a bit since 1995, and from 2004 to 2006 data volume has been in the 7 million or so range
+   * Notice that flight volume has grown quite a bit since 1995, and from 2004 to 2006 data volume has been in the 7 million or so range
 
 6. Migrate an existing table stored with a ***Managed Hive*** table format to an ***Iceberg*** table format.
 - This is one way to migrate tables to Iceberg. Another option is ***In-Place Table Migration***

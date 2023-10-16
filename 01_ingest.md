@@ -238,7 +238,7 @@ The primary goal of this is to build an ingestion data pipeline.
    TBLPROPERTIES('format-version'='2');
    ```
 
-   - The **TBLPROPERTIES** property **format-version** specifies using version 2 of the Iceberg table specification, which provides row-level ACID capabilties.
+   - The **TBLPROPERTIES** property **format-version** specifies using version 2 of the Iceberg table specification, which provides row-level ACID capabilities.
 
    b. Another way to check information on a table is to the the SHOW CREATE statement, this will show the syntax for creating this table
 
@@ -248,7 +248,7 @@ The primary goal of this is to build an ingestion data pipeline.
 
    ![Show Create Table flights](/images/show_create_table_flights.png)
 
-   - Scroll to the right within the resultto find the **PARTITIONED BY** clause
+   - Scroll to the right within the result to find the **PARTITIONED BY** clause
 
    c. Ingest data into the **flights** table from the raw layer **flights** table. We will only select the flight data from 1995 to 2006.
 
@@ -275,7 +275,7 @@ The primary goal of this is to build an ingestion data pipeline.
 
 6. Migrate an existing table stored with a ***Managed Hive*** table format to an ***Iceberg*** table format.
 
-   - This is one way to migrate tables to Iceberg. Another option is ***In-Place Table Migration***
+   - This is one way to migrate tables to Iceberg. Another option is an ***In-Place Table Migration***
 
    - This would be used if you already have tables in a Cloudera Data Warehouse that are stored in a Hive table format
 
@@ -321,4 +321,4 @@ The primary goal of this is to build an ingestion data pipeline.
       
       ![Describe Planes Iceberg Table](/images/query.describe.planes.png)
 
-We are now ready to [Analyze](02_analyze.md), [Visualize](03_visualize.md) and [Predict](04_predict.md) Data!
+We are now ready to [Analyze](02_analyze.md), [Visualize](03_visualize.md), and [Predict](04_predict.md) Data!

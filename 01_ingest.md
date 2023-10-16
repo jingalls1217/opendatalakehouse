@@ -148,6 +148,8 @@ INSERT INTO ${prefix}_airlines.airports
 ```
 DESCRIBE FORMATTED ${prefix}_airlines.airports;
 ```
+![Airports Iceberg Table](/images/airports_iceberg_describe_formatted.png)
+
 
    d. Query the newly created table, execute the below query - 
 
@@ -155,7 +157,34 @@ DESCRIBE FORMATTED ${prefix}_airlines.airports;
 SELECT * FROM ${prefix}_airlines.airports LIMIT 10;
 ```
 ![Query Airports](/images/query.airlines.airports.png)
-3. Just like in the previous step execute the following below queries to create the **unique_tickets** table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
+
+3. Execute the following below queries to create the **airlines** table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
+
+    a. Create the **airlines** table in an Iceberg table format -
+
+```
+drop table if exists ${prefix}_airlines.airlines;
+
+CREATE TABLE ${prefix}_airlines.airlines (
+   code string, description string
+)
+STORED AS ICEBERG;
+```
+
+   b. Ingest data into the **airlines** table from the raw layer airports table -
+
+```
+INSERT INTO ${prefix}_airlines.airlines
+   SELECT * FROM ${prefix}_airlines_raw.airlines;
+```
+
+   c. Query the newly created table, execute the below query - 
+
+```
+SELECT * FROM ${prefix}_airlines.airlines LIMIT 10;
+```
+
+4. Just like in the previous step execute the following below queries to create the **unique_tickets** table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
 
     a. Create **unique_tickets** table in an Iceberg table format -
 
@@ -181,7 +210,7 @@ INSERT INTO ${prefix}_airlines.unique_tickets
    SELECT * FROM ${prefix}_airlines_raw.unique_tickets;
 ```
 
-4. Execute the following below queries to create a partitioned **flights** table with an Iceberg table format by using the **CREATE TABLE, PARTITIONED BY (column_list), STORED AS ICEBERG** syntax
+5. Execute the following below queries to create a partitioned **flights** table with an Iceberg table format by using the **CREATE TABLE, PARTITIONED BY (column_list), STORED AS ICEBERG** syntax
 
     a. Create a **flights** table, partitioned by the **year** column, with an Icebrerg table format -
 
@@ -211,6 +240,8 @@ TBLPROPERTIES('format-version'='2');
 SHOW CREATE TABLE ${prefix}_airlines.flights;
 ```
 
+![Show Create Table flights](/images/show_create_table_flights.png)
+
 * Scroll to the right within the resultto find the **PARTITIONED BY** clause
 
    c. Ingest data into the **flights** table from the raw layer **flights** table. We will only select the flight data from 1995 to 2006.
@@ -235,7 +266,7 @@ ORDER BY year desc;
 
 - Notice that flight volume has grown quite a bit since 1995, and from 2004 to 2006 data volume has been in the 7 million or so range
 
-4. Migrate an existing table stored with a ***Managed Hive*** table format to an ***Iceberg*** table format.
+6. Migrate an existing table stored with a ***Managed Hive*** table format to an ***Iceberg*** table format.
 - This is one way to migrate tables to Iceberg. Another option is ***In-Place Table Migration***
 - This would be used if you already have tables in a Cloudera Data Warehouse that are stored in a Hive table format
 - The migrated table will be named **planes** and will be stored in an Iceberg table format 

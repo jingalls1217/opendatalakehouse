@@ -1,6 +1,6 @@
 # 01_ingest
 
-As part of the Ingestion phase, we will ingest data from an S3 Bucket into Impala Tables using Hue.
+As part of the Ingest phase, we will ingest data from an S3 Bucket into Impala Tables using Hue.
 
 In a pattern that we will release shortly, we will use Cloudera Data Flow (CDF) to ingest data from numerous other sources. 
 

@@ -182,7 +182,6 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
 4. You will be taken back to the Datasets tab.  Under Title/Table, you will see the `<prefix>-airlines-master` Dataset we just created, click on it to open the Dataset.
 ![CDV Dataset](images/CDV_dataset_link_to_edit.png)
 
-
 5. On the left nav, click on `Data Model`.
 ![CDV Data Model left nav](images/CDV_data_model_left_nav.png)
 
@@ -222,51 +221,41 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
 
      - If an `Edit Join` pops up, click `APPLY`
 
-
-============
-
 10. Edit joins between flights and its dimension tables
 
 * Select ![CDV join](images/CDV_join_button.png) (join) between the flights table and each dimension table (airlines, airports, airports_1)
-
-
 
 * On `Join Details` select `Left` join for the type of join, and select `EDIT JOIN`
 ![CDV Join Details](images/CDV_dm_join_details.png)
 
  * On `Edit Join` screen
+![CDV Joins to configure](images/CDV_joins_to_configure.png)
+
   a. Join between `flights` and `airlines`
    - Under `<prefix>_airlines.flights` choose `uniquecarrier` from the drop-down
 
    - Under `<prefix>_airlines.airlines` choose `code` from the drop-down
-
- --Need screenshot--
-
+![CDV Join Details](images/CDV_join_flights_airlines.png)
 
   b. Join between `flights` and `airlines` for the origin airport
    - Under `<prefix>_airlines.flights` choose `origin` from the drop-down
 
    - Under `<prefix>_airlines.airports` choose `iata` from the drop-down
-
-   --Need screenshot--
-
+![CDV Join Details](images/CDV_join_flights_airports_origin.png)
 
   c. Join between `flights` and `airlines` for the destination (dest) airport
    - Under `<prefix>_airlines.flights` choose `dest` from the drop-down
 
    - Under `<prefix>_airlines.airports` choose `iata` from the drop-down
-
-   --Need screenshot--
-
+![CDV Join Details](images/CDV_join_flights_airports_dest.png)
 
 13. To test if the Joins are working, click on `SHOW DATA`, you will see a table of data representing the `flights` table being joined to the `airports` table for the Origin and Destination airport details
-
-    --Need screenshot--
+![CDV Join Details](images/CDV_show_data_results.png)
 
 14. Click `SAVE`
 
 
-============
+====working on the Fields section here========
 
 
 15. Click on `Fields` in the left nav

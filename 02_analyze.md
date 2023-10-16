@@ -1,8 +1,8 @@
 # 02_analyze
 
-As part of the Analyze phase, we will run an interactive analysis of the data we brought in through a data pipeline into Cloudera's Data Lakehouse using Impala.
+As part of the `Analyze` phase, we will run an interactive analysis of the data we brought in through a data pipeline into Cloudera's Data Lakehouse using Impala.
 
-## Pre-requisites
+## Prerequisites
 
 - Please ensure that you have completed the [lab](01_ingest.md#lab-2-create-an-open-data-lakehouse-powered-by-apache-iceberg) to ingest the data needed for analysis.
 

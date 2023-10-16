@@ -1,62 +1,64 @@
 # 03_visualize
 
-In this phase we will be working to create a Dashboard using the Data Lakehouse we created in the 01_ingest phase.
+As part of the `Visualize` phase, we will be working to create a Dashboard using the Data Lakehouse we created in the [01_ingest](01_ingest.md) phase.
 
-In this phase we will be deploying an end\-to\-end machine learning project that will also be used in the next phase [04_predict](04_predict.md).
+In this phase, we will be deploying an end\-to\-end machine learning project that will also be used in the next phase, [04_predict](04_predict.md).
 
-## Pre-requisites
+## Prerequisites
 
-1. Please ensure that you have completed the [labs](01_ingest.md#01_ingest) to ingest data needed for Visualization.
+1. Please ensure that you have completed the [labs](01_ingest.md#01_ingest) to ingest the data needed for Visualization.
 
 2. Set your CDP Workload Password
-   a. On your browser navigate back to the CDP Management Console
 
-![Return_to_cdp.png](images/Return_to_cdp.png)
+    a. On your browser navigate back to the CDP Management Console
 
-   b. Go back to CDP Home Page by clicking the bento menu icon in the top left corner of the Data Hub page
+    ![Return_to_cdp.png](images/Return_to_cdp.png)
 
-![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_2023_04_24_at_11_33_56_PM.png)
+    b. Go back to CDP Home Page by clicking the bento menu icon in the top left corner of the Data Hub page
 
-   b. In the bottom left corner find your user id and click on it, in the pop up click on `Profile`
+    ![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_2023_04_24_at_11_33_56_PM.png)
 
-![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_User_Profile.png)
+    c. In the bottom left corner, find your user id and click on it. In the popup, click on `Profile`
 
-   c. On the User Profile page, click on `Set Workload Password`
+    ![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_User_Profile.png)
 
-![Screen_Shot_Set_Workload_pw.png](images/Screen_Shot_Set_Workload_pw.png)
+    d. On the User Profile page, click on `Set Workload Password`
 
-   d. Enter a strong password, confirm it and click on `Set Workload Password`
+    ![Screen_Shot_Set_Workload_pw.png](images/Screen_Shot_Set_Workload_pw.png)
 
-![Screen_Shot_Reset_WL_pw.png](images/Screen_Shot_Reset_WL_pw.png)
+    e. Enter a strong password, confirm it, and click on `Set Workload Password`
 
-   e. You should see a message that the Workload password has been updated.
+    ![Screen_Shot_Reset_WL_pw.png](images/Screen_Shot_Reset_WL_pw.png)
 
-![Screen_Shot_Reset_WL_success.png](images/Screen_Shot_Reset_WL_success.png)
+    - You should see a message that the Workload password has been updated.
 
-3. In Cloudera Machine Learning (CML) provide your CDP Workload Password
+    ![Screen_Shot_Reset_WL_success.png](images/Screen_Shot_Reset_WL_success.png)
 
-   a. Open Cloudera Machine Learning (CML)
-      * Click the bento menu icon in the top left corner and select `Machine Learning`
+3. In Cloudera Machine Learning (CML), provide your CDP Workload Password
 
-![Menu_nav2_CML.png](images/Menu_nav2_CML.png)
+    a. Open Cloudera Machine Learning (CML)
 
-   b. Note the **Environment Name**, under `Environment`, as it will be used as one of the inputs while we create our Machine Learning model.
+    - Click the bento menu icon in the top left corner and select `Machine Learning`
 
-![Screen_Shot_2023_04_24_at_11_37_42_PM.png](images/Screen_Shot_2023_04_24_at_11_37_42_PM.png)
+    ![Menu_nav2_CML.png](images/Menu_nav2_CML.png)
 
-   c. Click on the Workspace available in your Machine Learning page.  This is found under `Worksapce`
+    b. Note the name of the environment, listed under the `Environment` column, as it will be used as one of the inputs while we create our Machine Learning model.
 
-   d. Click on your user id in the top right corner, and click
+    c. Click on the workspace name link, found under the `Workspace` column
 
-![Screen_Shot_cml_user_acct_setting.png](images/Screen_Shot_cml_user_acct_setting.png)
+    ![Screen_Shot_2023_04_24_at_11_37_42_PM.png](images/Screen_Shot_2023_04_24_at_11_37_42_PM.png)
 
-   e. On the User Profile page, click on the `Environment Variables` tab
+    d. Click on your user id in the top right corner, and click
 
-![Screen_Shot_CML_User_Settings.png](images/CML_User_Settings.png)
+    ![Screen_Shot_cml_user_acct_setting.png](images/Screen_Shot_cml_user_acct_setting.png)
 
-   f. Enter your Workload Password from **Step 2** in `WORKLOAD_PASSWORD` and click `Save`
+    e. On the User Profile page, click on the `Environment Variables` tab
 
-![Screen_Shot_CML_Set_WL_pw.png](images/Screen_Shot_CML_Set_WL_pw.png)
+    ![Screen_Shot_CML_User_Settings.png](images/CML_User_Settings.png)
+
+    f. Enter your Workload Password from **Step 2** in `WORKLOAD_PASSWORD` and click `Save`
+
+    ![Screen_Shot_CML_Set_WL_pw.png](images/Screen_Shot_CML_Set_WL_pw.png)
 
 # Cloudera Machine Learning (CML) Project
 
@@ -64,12 +66,13 @@ In this phase we will be deploying an end\-to\-end machine learning project that
 
 1. Open Cloudera Machine Learning (CML)
 
-   * If you just completed providing our Workload Password to CML, in the left nav click on Home.
+    - If you just completed providing our Workload Password to CML, in the left nav click on Home.
 
-   * If not, you can always go back to CDP Home Page by clicking the bento menu icon in the top left corner, click on Home, select the `Machine Learning` tile, and click on the Workspace available in your Machine Learning page (found under `Workspace`).  
-![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_2023_04_24_at_11_33_56_PM.png)
-![Screen_Shot_2023_04_24_at_11_42_33_PM.png](images/Screen_Shot_2023_04_24_at_11_42_33_PM.png)
-![Screen_Shot_2023_04_24_at_11_37_42_PM.png](images/Screen_Shot_2023_04_24_at_11_37_42_PM.png)
+    - If not, you can always go back to CDP Home Page by clicking the bento menu icon in the top left corner, click on Home, select the `Machine Learning` tile, and click on the Workspace available in your Machine Learning page (found under `Workspace`).
+
+    ![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_2023_04_24_at_11_33_56_PM.png)
+    ![Screen_Shot_2023_04_24_at_11_42_33_PM.png](images/Screen_Shot_2023_04_24_at_11_42_33_PM.png)
+    ![Screen_Shot_2023_04_24_at_11_37_42_PM.png](images/Screen_Shot_2023_04_24_at_11_37_42_PM.png)
 
 2. Click AMPs in the left menu
 

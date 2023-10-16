@@ -6,11 +6,13 @@ In a pattern that we will release shortly, we will use Cloudera Data Flow (CDF) 
 
 The primary goal of this is to build an ingestion data pipeline.
 - Source data is pre-loaded in an S3 Bucket in CSV format. There are 5 datasets that we need to ingest into Impala.
+
     - Flights
     - Airports
     - Planes
     - Airlines
     - Passengers
+
 - We connect to the source bucket, pull all 5 datasets, and ingest them into the CDP Data Lakehouse (using Impala in this case) for further analysis in the [Analyze](02_analyze.md) phase and ultimately into our Machine Learning Prediction Model.
 
 ## Lab 1: Ingest Flights Data Needed for Analysis and Prediction
@@ -27,7 +29,7 @@ The primary goal of this is to build an ingestion data pipeline.
 
    a. Note the **Environment Name** as it will be used as one of the inputs while we create tables
    
-   b. Click on the Data Hub called **dwarehouse**. 
+   b. Click on the Data Hub called `dwarehouse`.
 
    ![Screenshot_2023_05_31_at_5_13_05_PM.png](images/Screenshot_2023_05_31_at_5_13_05_PM.png)
 
@@ -37,13 +39,13 @@ The primary goal of this is to build an ingestion data pipeline.
 
 4.  Create a database for the ***raw layer*** by entering the query below into the Hue Impala editor. This database will be called `<prefix>_airlines_raw`, replacing `<prefix>` with your unique prefix.
 
-      ```
-      CREATE DATABASE ${prefix}_airlines_raw;
-      ```
+   ```
+   CREATE DATABASE ${prefix}_airlines_raw;
+   ```
 
-      - In the **prefix** field, enter a short unique identifier.
-      - Click the **Execute button** (*Play* icon), to the left of the editor text box, to execute the query.
-      - If you run this and it returns ***Database already exists***, it means this prefix was already used. Choose another prefix value and re-run the query.
+   - In the **prefix** field, enter a short unique identifier.
+   - Click the **Execute button** (*Play* icon), to the left of the editor text box, to execute the query.
+   - If you run this and it returns ***Database already exists***, it means this prefix was already used. Choose another prefix value and re-run the query.
 
 5. Create the `flights` table by entering and executing the query below - 
 
@@ -115,17 +117,17 @@ The primary goal of this is to build an ingestion data pipeline.
 - The ingested data will be written to Iceberg tables
 - All Iceberg tables will use the Parquet file format; however, you can also use ORC or AVRO file formats for Iceberg tables
 
-1. We will create a database for the **Open Data Lakehouse** using the query below. This database will be called `<prefix>_airlines`, replacing `<prefix>` with your unique prefix. 
+1. We will create a database for the **Open Data Lakehouse** using the query below. This database will be called **&lt;prefix>_airlines**, replacing **&lt;prefix>** with your unique prefix. 
 
    ```
    CREATE DATABASE ${prefix}_airlines;
    ```
 
-   - In the **prefix** field, use the same value you used for Lab 1.
+- In the **prefix** field, use the same value you used for Lab 1.
 
-2. Execute the following below queries to create the `airports` table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
+2. Execute the following below queries to create the **airports** table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
 
-   a. Create the `airports` table in an Iceberg table format -
+    a. Create the **airports** table in an Iceberg table format
 
    ```
    drop table if exists ${prefix}_airlines.airports;
@@ -136,29 +138,60 @@ The primary goal of this is to build an ingestion data pipeline.
    STORED AS ICEBERG;
    ```
 
-   b. Ingest data into the `airports` table from the raw layer airports table -
+   b. Ingest data into the **airports** table from the raw layer airports table
 
    ```
    INSERT INTO ${prefix}_airlines.airports
       SELECT * FROM ${prefix}_airlines_raw.airports;
    ```
 
-   c. Check the table properties to see details for the `airports` Iceberg table -
+   c. Check the table properties to see details for this Iceberg table
 
    ```
    DESCRIBE FORMATTED ${prefix}_airlines.airports;
    ```
 
-   d. Query the newly created `airports` table. Execute the query below - 
+   - In the screenshot below, there are a few things to pay attention to which are the Location, Table Type, Metadata Location fields and values.
+
+   ![Describe Formatted Airports Iceberg Table](/images/airports_iceberg_describe_formatted.png)
+
+   d. Query the newly created table, execute the below query
 
    ```
    SELECT * FROM ${prefix}_airlines.airports LIMIT 10;
    ```
+
    ![Query Airports](/images/query.airlines.airports.png)
 
-3. Just like in the previous step, execute the following below queries to create the `unique_tickets` table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
+3. Execute the following below queries to create the **airlines** table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
 
-    a. Create the `unique_tickets` table with an Iceberg table format -
+    a. Create the **airlines** table in an Iceberg table format
+
+   ```
+   drop table if exists ${prefix}_airlines.airlines;
+
+   CREATE TABLE ${prefix}_airlines.airlines (
+      code string, description string
+   )
+   STORED AS ICEBERG;
+   ```
+
+   b. Ingest data into the **airlines** table from the raw layer airports table
+
+   ```
+   INSERT INTO ${prefix}_airlines.airlines
+      SELECT * FROM ${prefix}_airlines_raw.airlines;
+   ```
+
+   c. Query the newly created table, execute the below query
+
+   ```
+   SELECT * FROM ${prefix}_airlines.airlines LIMIT 10;
+   ```
+
+4. Just like in the previous step execute the following below queries to create the **unique_tickets** table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
+
+    a. Create **unique_tickets** table in an Iceberg table format
 
    ```
    drop table if exists ${prefix}_airlines.unique_tickets;
@@ -175,16 +208,16 @@ The primary goal of this is to build an ingestion data pipeline.
    STORED AS ICEBERG;
    ```
 
-   b. Ingest data into the `unique_tickets` table from the raw layer unique_tickets table
+   b. Ingest data into the **unique_tickets** table from the raw layer unique_tickets table
 
    ```
    INSERT INTO ${prefix}_airlines.unique_tickets
       SELECT * FROM ${prefix}_airlines_raw.unique_tickets;
    ```
 
-4. Execute the following below queries to create a partitioned `flights` table with an Iceberg table format by using the **CREATE TABLE, PARTITIONED BY (column_list), STORED AS ICEBERG** syntax
+5. Execute the following below queries to create a partitioned **flights** table with an Iceberg table format by using the **CREATE TABLE, PARTITIONED BY (column_list), STORED AS ICEBERG** syntax
 
-    a. Create a `flights` table, partitioned by the **year** column, with an Icebrerg table format -
+   a. Create a **flights** table, partitioned by the **year** column, with an Icebrerg table format
 
    ```
    DROP TABLE IF EXISTS ${prefix}_airlines.flights;
@@ -204,7 +237,7 @@ The primary goal of this is to build an ingestion data pipeline.
    TBLPROPERTIES('format-version'='2');
    ```
 
-* The **TBLPROPERTIES** property **format-version** specifies using version 2 of the Iceberg table specification, which provides row-level ACID capabilties.
+   - The **TBLPROPERTIES** property **format-version** specifies using version 2 of the Iceberg table specification, which provides row-level ACID capabilties.
 
    b. Another way to check information on a table is to the the SHOW CREATE statement, this will show the syntax for creating this table
 
@@ -212,7 +245,9 @@ The primary goal of this is to build an ingestion data pipeline.
    SHOW CREATE TABLE ${prefix}_airlines.flights;
    ```
 
-* Scroll to the right within the resultto find the **PARTITIONED BY** clause
+   ![Show Create Table flights](/images/show_create_table_flights.png)
+
+   - Scroll to the right within the resultto find the **PARTITIONED BY** clause
 
    c. Ingest data into the **flights** table from the raw layer **flights** table. We will only select the flight data from 1995 to 2006.
 
@@ -221,7 +256,8 @@ The primary goal of this is to build an ingestion data pipeline.
       SELECT * FROM ${prefix}_airlines_raw.flights
       WHERE year <= 2006;
    ```
-- The **INSERT INTO** query may take several minutes to finish executing.
+
+   - The **INSERT INTO** query may take several minutes to finish executing.
 
    d. Query the newly created table, execute the below query - 
 
@@ -236,48 +272,52 @@ The primary goal of this is to build an ingestion data pipeline.
 
    - Notice that flight volume has grown quite a bit since 1995, and from 2004 to 2006 data volume has been in the 7 million or so range
 
-4. Migrate an existing table stored with a ***Managed Hive*** table format to an ***Iceberg*** table format.
+6. Migrate an existing table stored with a ***Managed Hive*** table format to an ***Iceberg*** table format.
 
    - This is one way to migrate tables to Iceberg. Another option is ***In-Place Table Migration***
+
    - This would be used if you already have tables in a Cloudera Data Warehouse that are stored in a Hive table format
+
    - The migrated table will be named **planes** and will be stored in an Iceberg table format 
+
    - We will first create a table named **planes_hive** in a Hive table format, which will be a managed Hive table
+
    - To migrate this table to Iceberg we will need to run a CTAS statement (**CREATE TABLE AS SELECT, STORED AS ICEBERG** syntax)
 
-   a. Create a **planes_hive** managed table in Hive table format. This will simulate an existing Impala implementation where tables have been created in a Hive table format -
+      a. Create a `planes_hive` managed table in Hive table format. This will simulate an existing Impala implementation where tables have been created in a Hive table format -
 
-   ```
-   drop table if exists ${prefix}_airlines.planes_hive;
+      ```
+      drop table if exists ${prefix}_airlines.planes_hive;
 
-   CREATE TABLE ${prefix}_airlines.planes_hive
-      AS SELECT * FROM ${prefix}_airlines_raw.planes;
-   ```
+      CREATE TABLE ${prefix}_airlines.planes_hive
+         AS SELECT * FROM ${prefix}_airlines_raw.planes;
+      ```
 
-   b. Check the table properties to see details for this Hive table
+      b. Check the table properties to see details for the `planes_hive` Hive table
 
-   ```
-   DESCRIBE FORMATTED ${prefix}_airlines.planes_hive;
-   ```
+      ```
+      DESCRIBE FORMATTED ${prefix}_airlines.planes_hive;
+      ```
 
-   ![Describe Planes Hive Table](/images/query.describe.planes_hive.png)
+      ![Describe Planes Hive Table](/images/query.describe.planes_hive.png)
 
-   c. Migrate the **planes_hive** table from the Hive table format to the Iceberg table format using **CREATE TABLE AS SELECT, STORED AS ICEBERG*** syntax
+      c. Migrate the `planes_hive` table from the Hive table format to the Iceberg table format using **CREATE TABLE AS SELECT, STORED AS ICEBERG*** syntax
 
-   ```
-   drop table if exists ${prefix}_airlines.planes;
+      ```
+      drop table if exists ${prefix}_airlines.planes;
 
-   CREATE TABLE ${prefix}_airlines.planes 
-   STORED AS ICEBERG 
-   TBLPROPERTIES ('format-version'='2')
-      AS SELECT * FROM ${prefix}_airlines.planes_hive;
-   ```
+      CREATE TABLE ${prefix}_airlines.planes 
+      STORED AS ICEBERG 
+      TBLPROPERTIES ('format-version'='2')
+         AS SELECT * FROM ${prefix}_airlines.planes_hive;
+      ```
 
-   d. Check the table properties to see details for this Iceberg table 
+      d. Check the table properties to see details for the newly migrated `planes` Iceberg table 
 
-   ```
-   DESCRIBE FORMATTED ${prefix}_airlines.planes;
-   ```
-
-![Describe Planes Iceberg Table](/images/query.describe.planes.png)
+      ```
+      DESCRIBE FORMATTED ${prefix}_airlines.planes;
+      ```
+      
+      ![Describe Planes Iceberg Table](/images/query.describe.planes.png)
 
 We are now ready to [Analyze](02_analyze.md), [Visualize](03_visualize.md) and [Predict](04_predict.md) Data!

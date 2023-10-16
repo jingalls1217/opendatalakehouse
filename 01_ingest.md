@@ -5,6 +5,7 @@ As part of the `Ingest` phase, we will ingest data from an S3 Bucket into Impala
 In a pattern that we will release shortly, we will use Cloudera Data Flow (CDF) to ingest data from numerous other sources. 
 
 The primary goal of this is to build an ingestion data pipeline.
+
 - Source data is pre-loaded in an S3 Bucket in CSV format. There are 5 datasets that we need to ingest into Impala.
 
     - Flights
@@ -278,9 +279,9 @@ The primary goal of this is to build an ingestion data pipeline.
 
    - This would be used if you already have tables in a Cloudera Data Warehouse that are stored in a Hive table format
 
-   - The migrated table will be named **planes** and will be stored in an Iceberg table format 
+   - The migrated table will be named `planes` and will be stored in an Iceberg table format 
 
-   - We will first create a table named **planes_hive** in a Hive table format, which will be a managed Hive table
+   - We will first create a table named `planes_hive` in a Hive table format, which will be a managed Hive table
 
    - To migrate this table to Iceberg we will need to run a CTAS statement (**CREATE TABLE AS SELECT, STORED AS ICEBERG** syntax)
 

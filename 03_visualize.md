@@ -162,12 +162,11 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
 ![Screen_Shot_cml_cdv_home.png](images/Screen_Shot_cml_cdv_home.png)
 
 2. On the top, click `DATASETS`
-
-    - In this lab, the Dataset we want to create will join the `flights` Iceberg table to the `airports` Iceberg table for the Origin Airport details and again for the Destination Airport details 
-
-    ![CDV_erd.png](images/CDV_erd.png)
+![Datasets header link](images/CDV_Datasets_header_link.png)
 
 3. Now click `New Dataset`
+    - In this lab, the Dataset we want to create will join the `flights` Iceberg table to the `airports` Iceberg table for the Origin Airport details and again for the Destination Airport details 
+   ![CDV_erd.png](images/CDV_erd.png)
 
     - `Dataset title` as `<prefix>-airlines-master`, replace &lt;prefix> with your prefix you used in 01_ingest phase
 
@@ -178,18 +177,17 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
     - In `Select Table` choose the `flights` Iceberg table
 
     - Click `CREATE` to create the Dataset (Data Model)
-
-    --Need screenshot--
+    ![CDV_new_dataset](images/CDV_new_dataset.png)
 
 4. You will be taken back to the Datasets tab.  Under Title/Table, you will see the `<prefix>-airlines-master` Dataset we just created, click on it to open the Dataset.
+![CDV Dataset](images/CDV_dataset_link_to_edit.png)
+
 
 5. On the left nav, click on `Data Model`.
-
-    --Need screenshot--
+![CDV Data Model left nav](images/CDV_data_model_left_nav.png)
 
 6. To Join tables to the `flights` table, click on `EDIT DATA MODEL`
-
-    ![CDV_data_model.png](images/CDV_data_model.png)
+![CDV data model](images/CDV_dataset_data_model.png)
 
 7. Click the `+` to the right of the flights table to join a table
 
@@ -198,16 +196,20 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
     - In `Table Name` choose the `airlines` table
 
     - Click on `SELECT`
+![CDV data model select airlines table](images/CDV_dm_airlines_table_select.png)
 
-    --Need screenshot--
+     - If an `Edit Join` pops up, click `APPLY`
 
-8. `Edit Join` popup
+8. Click the `+` to the right of the flights table to join a table
 
-    - Under `<prefix>_airlines.flights` choose `uniquecarrier` from the drop-down
+    - In `Database Name` choose the `<prefix>_airlines` database you created in 01_ingest
 
-    - Under `<prefix>_airlines.airlines` choose `code` from the drop-down
+    - In `Table Name` choose the `airports` table
 
-    --Need screenshot--
+    - Click on `SELECT`
+![CDV data model select airlines table](images/CDV_dm_airports_origin_table_select.png)
+
+     - If an `Edit Join` pops up, click `APPLY`
 
 9. Click the `+` to the right of the flights table to join a table
 
@@ -216,40 +218,56 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
     - In `Table Name` choose the `airports` table
 
     - Click on `SELECT`
+![CDV data model select airlines table](images/CDV_dm_airports_dest_table_select.png)
 
-    --Need screenshot--
+     - If an `Edit Join` pops up, click `APPLY`
 
-10. `Edit Join` popup
 
-    - Under `<prefix>_airlines.flights` choose `origin` from the drop-down
+============
 
-    - Under `<prefix>_airlines.airports` choose `iata` from the drop-down
+10. Edit joins between flights and its dimension tables
 
-    --Need screenshot--
+* Select ![CDV join](images/CDV_join_button.png) (join) between the flights table and each dimension table (airlines, airports, airports_1)
 
-11. Click the `+` to the right of the flights table to join a table
 
-    - In `Database Name` choose the `<prefix>_airlines` database you created in 01_ingest
 
-    - In `Table Name` choose the `airports` table
+* On `Join Details` select `Left` join for the type of join, and select `EDIT JOIN`
+![CDV Join Details](images/CDV_dm_join_details.png)
 
-    - Click on `SELECT`
+ * On `Edit Join` screen
+  a. Join between `flights` and `airlines`
+   - Under `<prefix>_airlines.flights` choose `uniquecarrier` from the drop-down
 
-    --Need screenshot--
+   - Under `<prefix>_airlines.airlines` choose `code` from the drop-down
 
-12. `Edit Join` popup
+ --Need screenshot--
 
-    - Under `<prefix>_airlines.flights` choose `dest` from the drop-down
 
-    - Under `<prefix>_airlines.airports` choose `iata` from the drop-down
+  b. Join between `flights` and `airlines` for the origin airport
+   - Under `<prefix>_airlines.flights` choose `origin` from the drop-down
 
-    --Need screenshot--
+   - Under `<prefix>_airlines.airports` choose `iata` from the drop-down
+
+   --Need screenshot--
+
+
+  c. Join between `flights` and `airlines` for the destination (dest) airport
+   - Under `<prefix>_airlines.flights` choose `dest` from the drop-down
+
+   - Under `<prefix>_airlines.airports` choose `iata` from the drop-down
+
+   --Need screenshot--
+
 
 13. To test if the Joins are working, click on `SHOW DATA`, you will see a table of data representing the `flights` table being joined to the `airports` table for the Origin and Destination airport details
 
     --Need screenshot--
 
 14. Click `SAVE`
+
+
+============
+
 
 15. Click on `Fields` in the left nav
 

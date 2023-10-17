@@ -179,17 +179,19 @@ d. After the Field is saved you will see it has automatically set the data type 
 ![CDV Flight Date Expression](images/CDV_flight_date_complete.png)
 
 20. Click 'SAVE' to save the Dataset
+![CDV Save Dataset](images/CDV_fields_save.png)
 
---Need Screenshot--
 
+* To compare what we just did with this Dataset, we can compare it to the following SQL:
 
-* To compare what we just did to this Dataset, we can compare it to the following SQL
-
-   `select B.description as carrier, C.city as origincity, D.city as destinationcity, A.*, CAST(CONCAT(CAST(year AS STRING) , '-', CAST(month AS STRING), '-', CAST(dayofmonth AS STRING)) AS DATE FORMAT 'yyyy-mm-dd') as flightdate from airlines.flights A INNER JOIN airlines.airlines B ON A.uniquecarrier = B.code INNER JOIN airlines.airports C ON A.origin = C.iata INNER JOIN airlines.airports D ON A.dest = D.iata`
+   `select B.description as carrier, C.city as origincity, D.city as destinationcity, A.*, CAST(CONCAT(CAST(year AS STRING) , '-', CAST(month AS STRING), '-', CAST(dayofmonth AS STRING)) AS DATE FORMAT 'yyyy-mm-dd') as flightdate from airlines.flights A LEFT OUTER JOIN airlines.airlines B ON A.uniquecarrier = B.code LEFT OUTER JOIN airlines.airports C ON A.origin = C.iata LEFT OUTER JOIN airlines.airports D ON A.dest = D.iata`
 
    * In this SQL you can see the Joins between Flights and Airlines; Flights and Airports for origin airport; and Flights to Airports for destination airport
 
-   * You can also see that `B.description as carrier`, `C.city as origincity`, and `D.city as destinationcity` all represent 
+   * You can also see that `B.description as carrier`, `C.city as origincity`, and `D.city as destinationcity` all represent renaming the base field to something more business related
+
+   * And `CAST(CONCAT(CAST(year AS STRING) , '-', CAST(month AS STRING), '-', CAST(dayofmonth AS STRING)) AS DATE FORMAT 'yyyy-mm-dd') as flightdate` is of course adding a derived field
+
 
 ## Lab 2: Create a Dashboard
 

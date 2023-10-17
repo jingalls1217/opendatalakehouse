@@ -81,7 +81,7 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
 
      - If an `Edit Join` pops up, click `APPLY`
 
-9. Click the `+` to the right of the flights table to join a table
+9. Click the `+` to the right of the `flights` table to join a table
 
     - In `Database Name` choose the `<prefix>_airlines` database you created in [01_ingest](01_ingest.md#01_ingest)
 
@@ -93,7 +93,7 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
 
     - If an `Edit Join` pops up, click `APPLY`
 
-10. Edit joins between flights and its dimension tables
+10. Edit joins between `flights` and its dimension tables
 
     - Select ![CDV join](images/CDV_join_button.png) (join) between the flights table and each dimension table (airlines, airports, airports_1)
 
@@ -146,9 +146,9 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
 
 16. Click on `EDIT FIELDS`
 
-17. Change default behavior of Fields
+17. Change the default behavior of Fields
 
-    - Cloudera Data Visualization (CDV) will try to classify the columns from each table into a Category (ie. Dimension or Measure) to control default beahavior of the Field
+    - Cloudera Data Visualization (CDV) will try to classify the columns from each table into a Category (ie. Dimension or Measure) to control the default behavior of the Field
     
     - Dimensions - data that you will not usually aggregate and instead will 
     
@@ -188,11 +188,11 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
 
     - Sometimes the data in the base tables does not support needs. There is no timestamp representing the flight date. So, instead of adding these expressions for every visual created we can define it here.
 
-    a. Under Measures > flights, click the drop down arrow to the right of `month`, select `Clone`
+    a. Under Measures > flights, click the drop-down arrow to the right of `month`, select `Clone`
 
     b. Under Dimensions > airports, click the Pencil next to `Copy of month`
 
-    - Change `Display Name` to Flight Date
+    - Change `Display Name` to `Flight Date`
 
         ![CDV Edit Flight Date basic settings](images/CDV_edit_flight_date_basic_settings.png)
 
@@ -203,27 +203,29 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
     AS DATE FORMAT 'yyyy-mm-dd')
     ```
 
-    - Click the `VALIDATE EXPRESSION` button to test the expression is valid
+    - Click the `VALIDATE EXPRESSION` button to test if the expression is valid
 
     - Click the `APPLY` button
 
         ![CDV Flight Date Expression](images/CDV_flight_date_expression.png)
 
-    d. After the Field is saved you will see it has automatically set the data type to a Timestamp, to the left of `Flight Date` you will see a drop down and a calendar
+    d. After the Field is saved you will see it has automatically set the data type to a Timestamp, to the left of `Flight Date` you will see a drop-down and a calendar
 
     ![CDV Flight Date Expression](images/CDV_flight_date_complete.png)
 
 20. Click 'SAVE' to save the Dataset
 
---Need Screenshot--
+    ![CDV Save Dataset](images/CDV_fields_save.png)
 
 - To compare what we just did to this Dataset, we can compare it to the following SQL
 
-   `select B.description as carrier, C.city as origincity, D.city as destinationcity, A.*, CAST(CONCAT(CAST(year AS STRING) , '-', CAST(month AS STRING), '-', CAST(dayofmonth AS STRING)) AS DATE FORMAT 'yyyy-mm-dd') as flightdate from airlines.flights A INNER JOIN airlines.airlines B ON A.uniquecarrier = B.code INNER JOIN airlines.airports C ON A.origin = C.iata INNER JOIN airlines.airports D ON A.dest = D.iata`
+   `select B.description as carrier, C.city as origincity, D.city as destinationcity, A.*, CAST(CONCAT(CAST(year AS STRING) , '-', CAST(month AS STRING), '-', CAST(dayofmonth AS STRING)) AS DATE FORMAT 'yyyy-mm-dd') as flightdate from airlines.flights A LEFT OUTER JOIN airlines.airlines B ON A.uniquecarrier = B.code LEFT OUTER JOIN airlines.airports C ON A.origin = C.iata LEFT OUTER JOIN airlines.airports D ON A.dest = D.iata`
 
-   * In this SQL you can see the Joins between Flights and Airlines; Flights and Airports for origin airport; and Flights to Airports for destination airport
+    - In this SQL you can see the Joins between Flights and Airlines; Flights and Airports for origin airport; and Flights to Airports for destination airport
 
-   * You can also see that `B.description as carrier`, `C.city as origincity`, and `D.city as destinationcity` all represent 
+    - You can also see that `B.description as carrier`, `C.city as origincity`, and `D.city as destinationcity` all represent renaming a base field to something more business related
+
+    - And `CAST(CONCAT(CAST(year AS STRING) , '-', CAST(month AS STRING), '-', CAST(dayofmonth AS STRING)) AS DATE FORMAT 'yyyy-mm-dd') as flightdate` is of course adding a derived field
 
 ## Lab 2: Create a Dashboard
 
@@ -281,7 +283,7 @@ We will create a scatter chart to identify the cities that have the most number 
 
 ### Correlate Delays with Origin and Destination City Pairs
 
-For this use\-case, we will let Cloudera Data Visualization recommend a chart type for us.
+For this use case, we will let CDV recommend a chart type for us.
 
 1. Click `Visuals`, then `New Visual`
 2. Now click on `Explore Visuals`

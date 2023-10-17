@@ -188,7 +188,7 @@ d. After the Field is saved you will see it has automatically set the data type 
 
    * In this SQL you can see the Joins between Flights and Airlines; Flights and Airports for origin airport; and Flights to Airports for destination airport
 
-   * You can also see that `B.description as carrier`, `C.city as origincity`, and `D.city as destinationcity` all represent renaming the base field to something more business related
+   * You can also see that `B.description as carrier`, `C.city as origincity`, and `D.city as destinationcity` all represent renaming a base field to something more business related
 
    * And `CAST(CONCAT(CAST(year AS STRING) , '-', CAST(month AS STRING), '-', CAST(dayofmonth AS STRING)) AS DATE FORMAT 'yyyy-mm-dd') as flightdate` is of course adding a derived field
 

@@ -2,154 +2,16 @@
 
 As part of the `Visualize` phase, we will be working to create a Dashboard using the Data Lakehouse we created in the [01_ingest](01_ingest.md) phase.
 
-In this phase, we will be deploying an end\-to\-end machine learning project that will also be used in the next phase, [04_predict](04_predict.md).
-
 ## Prerequisites
 
-1. Please ensure that you have completed the [labs](01_ingest.md#01_ingest) to ingest the data needed for Visualization.
-
-2. Set your CDP Workload Password
-
-    a. On your browser navigate back to the CDP Management Console
-
-    ![Return_to_cdp.png](images/Return_to_cdp.png)
-
-    b. Go back to the CDP Home Page by clicking the bento menu icon in the top left corner of the Data Hub page
-
-    ![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_2023_04_24_at_11_33_56_PM.png)
-
-    c. In the bottom left corner, find your user ID and click on it. In the popup, click on `Profile`
-
-    ![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_User_Profile.png)
-
-    d. On the User Profile page, click on `Set Workload Password`
-
-    ![Screen_Shot_Set_Workload_pw.png](images/Screen_Shot_Set_Workload_pw.png)
-
-    e. Enter a strong password, confirm it, and click on `Set Workload Password`
-
-    ![Screen_Shot_Reset_WL_pw.png](images/Screen_Shot_Reset_WL_pw.png)
-
-    - You should see a message that the Workload password has been updated.
-
-    ![Screen_Shot_Reset_WL_success.png](images/Screen_Shot_Reset_WL_success.png)
-
-3. In Cloudera Machine Learning (CML), provide your CDP Workload Password
-
-    a. Open Cloudera Machine Learning (CML)
-
-    - Click the bento menu icon in the top left corner and select `Machine Learning`
-
-    ![Menu_nav2_CML.png](images/Menu_nav2_CML.png)
-
-    b. Note the name of the environment, listed under the `Environment` column, as it will be used as one of the inputs while we create our Machine Learning model.
-
-    c. Click on the workspace name link, found under the `Workspace` column
-
-    ![Screen_Shot_2023_04_24_at_11_37_42_PM.png](images/Screen_Shot_2023_04_24_at_11_37_42_PM.png)
-
-    d. Click on your user ID in the top right corner, and click
-
-    ![Screen_Shot_cml_user_acct_setting.png](images/Screen_Shot_cml_user_acct_setting.png)
-
-    e. On the User Profile page, click on the `Environment Variables` tab
-
-    ![Screen_Shot_CML_User_Settings.png](images/CML_User_Settings.png)
-
-    f. Enter your Workload Password from **Step 2** in `WORKLOAD_PASSWORD` and click `Save`
-
-    ![Screen_Shot_CML_Set_WL_pw.png](images/Screen_Shot_CML_Set_WL_pw.png)
+1. Please ensure that you have completed [00_prereqs](00_prereqs.md) to deploy the Applied Machine Learning Prototype (AMP) for `Canceled Flight Prediction`.
+2. Please ensure that you have completed [01_ingest](01_ingest.md#01_ingest) to ingest the data needed for Visualizations.
 
 # Cloudera Machine Learning (CML) Project
 
-## Lab 1: Deploy Machine Learning Applied Machine Learning Prototype (AMP)
-
-1. Open Cloudera Machine Learning (CML)
-
-    - If you just completed providing our Workload Password to CML, click on `Home` in the left navigation menu.
-
-    - If not, you can always go back to the CDP Home Page by clicking the bento menu icon in the top left corner, click on `Home`, select the `Machine Learning` tile, and click on the available Workspace on the Machine Learning page (found under the `Workspace` column).
-
-    ![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_2023_04_24_at_11_33_56_PM.png)
-    ![Screen_Shot_2023_04_24_at_11_42_33_PM.png](images/Screen_Shot_2023_04_24_at_11_42_33_PM.png)
-    ![Screen_Shot_2023_04_24_at_11_37_42_PM.png](images/Screen_Shot_2023_04_24_at_11_37_42_PM.png)
-
-2. Click AMPs in the left menu
-
-    ![Screen_Shot_left_nav_AMPs.png](images/Screen_Shot_left_nav_AMPs.png)
-
-3. Cloudera Machine Learning (CML) will show you a catalog of available Machine Learning Prototypes
-
-4. Search for the Canceled Flight Prediction prototype by entering `cancel` in the search box and clicking the prototype tile
-
-    ![Screen_Shot_search_for_Cancel_Pred_AMP.png](images/Screen_Shot_search_for_Cancel_Pred_AMP.png)
-
-5. Now click `Configure Project`
-
-    ![Screen_Shot_AMP_Configure_Project.png](images/Screen_Shot_AMP_Configure_Project.png)
-
-6. Wait for the Project to be created on the Project page \(takes a few seconds to load the code locally\)
-
-    ![Screen_Shot_CML _Projects_page.png](images/Screen_Shot_CML_Projects_page.png)
-
-We have now created a Cloudera Machine Learning (CML) Project that will be populated with all of the content making up the AMP we just deployed.  This includes data, code, files, model definition, and a Flask application.
-
-## Lab 2: Configure and Deploy Canceled Flight Prediction AMP
-
-1. Open the created Cloudera Machine Learning (CML) Project you just created, named "Canceled Flight Prediction - &lt;user-id>" by clicking on the Project tile
-
-    ![Screen_Shot_CML_Projects_page.png](images/Screen_Shot_CML_Projects_page.png)
-
-2. CML will now give the user a series of Environment Variables to fill in. Fill as below:
-
-    - `STORAGE_MODE` as local
-    - `SPARK_CONNECTION_NAME` with the Environment Name we collected above.
-    - `DW_DATABASE` as `<prefix>_airlines` - where &lt;prefix> is the same &lt;prefix> you used in the 01_ingest phase
-    - `DW_TABLE` as `flights`
-    - `USE_PREBUILT_MODEL` as `no`
-    - Enable the button next to `Enable Spark`
-
-3. Leave the rest of the fields with their default values.
-
-4. Click `Launch Project`
-
-    - It takes a few minutes to run the Jobs to build and deploy an end\-to\-end machine learning project
-
-    ![Screen_Shot_AMP_Configuration_Settings.png](images/Screen_Shot_AMP_Configuration_Settings.png)
-
-Cloudera Machine Learning will automatically execute the following 10 steps:
-
-`Step 1:` Job to install dependencies
-
-`Step 2:` Running the install dependencies job
-
-`Step 3:` Job to process the raw data files
-
-`Step 4:` Running job to process raw data files
-
-`Step 5:` Job to train the model
-
-`Step 6:` Run the model training job
-
-`Step 7:` Create the flight delay prediction model API endpoint
-
-`Step 8:` Build the model
-
-`Step 9:` Deploy the model
-
-`Step 10:` Start the Application
-
-You can follow the executed step by clicking on the `View details` page to see the progress and what the prototype execution looks like in the background.
-
-All the steps above should be successful before proceeding to the next steps. It takes roughly 8 minutes for the prototype to be deployed. You should see a `Completed all steps` message above the executed steps.
-
-![Screen_Shot_Completed_AMP_run.png](images/Screen_Shot_Completed_AMP_run.png)
-
----
-
 # Embedded Data Visualizations
 
-## Lab 3: Create a Dataset
+## Lab 1: Create a Dataset
 
 As part of deploying the AMP `Canceled Flight Prediction`, a Data Visualization application has been enabled.  We will dive into this Project in more detail during the [04_predict](04_predict.md#04_predict) phase.
 
@@ -328,7 +190,7 @@ AS DATE FORMAT 'yyyy-mm-dd')
 --Need Screenshot--
 
 
-## Lab 4: Create a Dashboard
+## Lab 2: Create a Dashboard
 
 In this lab, we will create a sample dashboard to visualize the reports for a business user.
 

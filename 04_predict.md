@@ -6,7 +6,8 @@ The primary goal of this project that we deployed is to build a gradient-boosted
 
 ## Prerequisites
 
-- Please ensure that you have completed [03_visualize - Lab 1](03_visualize.md#lab-1-deploy-machine-leaning-applied-machine-learning-prototype-amp) to deploy the Applied Machine Learning Prototype (AMP) for `Canceled Flight Prediction`.
+1. Please ensure that you have completed [00_prereqs](00_prereqs.md) to deploy the Applied Machine Learning Prototype (AMP) for `Canceled Flight Prediction`.
+2. Please ensure that you have completed [01_ingest](01_ingest.md#01_ingest) to ingest the data needed for Visualizations.
 
 ## Lab 1 - Explore Machine Learning AMP Project
 

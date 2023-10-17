@@ -4,7 +4,7 @@ As part of the `Analyze` phase, we will run an interactive analysis of the data 
 
 ## Prerequisites
 
-- Please ensure that you have completed the [lab](01_ingest.md#lab-2-create-an-open-data-lakehouse-powered-by-apache-iceberg) to ingest the data needed for analysis.
+- Please ensure that you have completed [01_ingest](01_ingest.md#lab-2-create-an-open-data-lakehouse-powered-by-apache-iceberg) to ingest the data needed for analysis.
 
 ## Lab 1: Explore the Ingested Data
 

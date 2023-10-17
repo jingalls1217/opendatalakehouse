@@ -129,13 +129,13 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
 
         ![CDV Join Details](images/CDV_join_flights_airports_dest.png)
 
-13. To test if the Joins are working, click on `SHOW DATA`. You will see a table of data representing the `flights` table being joined to the `airports` table for the Origin and Destination airport details
+11. To test if the Joins are working, click on `SHOW DATA`. You will see a table of data representing the `flights` table being joined to the `airports` table for the Origin and Destination airport details
 
     ![CDV Join Details](images/CDV_show_data_results.png)
 
-14. Click the `SAVE` button
+12. Click the `SAVE` button
 
-15. Click on `Fields` in the left nav.
+13. Click on `Fields` in the left nav.
 
     - When building a Dataset, it is common to:
 
@@ -144,9 +144,9 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
         - Assign default behavior (Dimension or Measure) of a field
         - Change default aggregation of fields prevents common mistakes when building visuals
 
-16. Click on `EDIT FIELDS`
+14. Click on `EDIT FIELDS`
 
-17. Change the default behavior of Fields
+15. Change the default behavior of Fields
 
     - Cloudera Data Visualization (CDV) will try to classify the columns from each table into a Category (ie. Dimension or Measure) to control the default behavior of the Field
     
@@ -169,22 +169,22 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
 
         ![CDV Change Category Type](images/CDV_change_category_type.png)
 
-18. Under `Dimensions > airlines`, click the pencil next to `description`
+16. Under `Dimensions > airlines`, click the pencil next to `description`
 
     - Change `Display Name` to Carrier
     - Click the `APPLY` button
 
     ![CDV Edit Airlines Desc](images/CDV_edit_airlines_desc.png)
 
-19. Under `Dimensions > airports`, click the pencil next to `city`
+17. Under `Dimensions > airports`, click the pencil next to `city`
    * Change `Display Name` to Origin City
    * Click the `APPLY` button
 
-20. Under `Dimensions > airports_1`, click the pencil next to `city`
+18. Under `Dimensions > airports_1`, click the pencil next to `city`
    * Change `Display Name` to Destination City
    * Click the `APPLY` button
 
-21. Add a derived field, `flightdate`
+19. Add a derived field, `flightdate`
 
     - Sometimes the data in the base tables does not support needs. There is no timestamp representing the flight date. So, instead of adding these expressions for every visual created we can define it here.
 

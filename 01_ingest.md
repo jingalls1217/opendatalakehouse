@@ -118,17 +118,17 @@ The primary goal of this is to build an ingestion data pipeline.
 - The ingested data will be written to Iceberg tables
 - All Iceberg tables will use the Parquet file format; however, you can also use ORC or AVRO file formats for Iceberg tables
 
-1. We will create a database for the **Open Data Lakehouse** using the query below. This database will be called **&lt;prefix>_airlines**, replacing **&lt;prefix>** with your unique prefix. 
+1. We will create a database for the **Open Data Lakehouse** using the query below. This database will be called `<prefix>_airlines`, replacing `<prefix>` with your unique prefix. 
 
    ```
    CREATE DATABASE ${prefix}_airlines;
    ```
 
-- In the **prefix** field, use the same value you used for Lab 1.
+- In the `prefix` field, use the same value you used for Lab 1.
 
-2. Execute the following below queries to create the **airports** table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
+2. Execute the following below queries to create the `airports` table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
 
-    a. Create the **airports** table in an Iceberg table format
+    a. Create the `airports` table in an Iceberg table format
 
    ```
    drop table if exists ${prefix}_airlines.airports;
@@ -139,14 +139,14 @@ The primary goal of this is to build an ingestion data pipeline.
    STORED AS ICEBERG;
    ```
 
-   b. Ingest data into the **airports** table from the raw layer airports table
+   b. Ingest data into the `airports` table from the raw layer airports table
 
    ```
    INSERT INTO ${prefix}_airlines.airports
       SELECT * FROM ${prefix}_airlines_raw.airports;
    ```
 
-   c. Check the table properties to see details for this Iceberg table
+   c. Check the `airports` table properties to see details for this Iceberg table
 
    ```
    DESCRIBE FORMATTED ${prefix}_airlines.airports;
@@ -156,7 +156,7 @@ The primary goal of this is to build an ingestion data pipeline.
 
    ![Describe Formatted Airports Iceberg Table](/images/airports_iceberg_describe_formatted.png)
 
-   d. Query the newly created table, execute the below query
+   d. Query the newly created `airports` table by executing the query below
 
    ```
    SELECT * FROM ${prefix}_airlines.airports LIMIT 10;
@@ -164,9 +164,9 @@ The primary goal of this is to build an ingestion data pipeline.
 
    ![Query Airports](/images/query.airlines.airports.png)
 
-3. Execute the following below queries to create the **airlines** table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
+3. Execute the following below queries to create the `airlines` table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
 
-    a. Create the **airlines** table in an Iceberg table format
+    a. Create the `airlines` table in an Iceberg table format
 
    ```
    drop table if exists ${prefix}_airlines.airlines;
@@ -177,22 +177,22 @@ The primary goal of this is to build an ingestion data pipeline.
    STORED AS ICEBERG;
    ```
 
-   b. Ingest data into the **airlines** table from the raw layer airports table
+   b. Ingest data into the `airlines` table from the raw layer airports table
 
    ```
    INSERT INTO ${prefix}_airlines.airlines
       SELECT * FROM ${prefix}_airlines_raw.airlines;
    ```
 
-   c. Query the newly created table, execute the below query
+   c. Query the newly created `airlines` table by executing the query below
 
    ```
    SELECT * FROM ${prefix}_airlines.airlines LIMIT 10;
    ```
 
-4. Just like in the previous step execute the following below queries to create the **unique_tickets** table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
+4. Just like in the previous step execute the following below queries to create the `unique_tickets` table in an Iceberg table format by using the **CREATE TABLE, STORED AS ICEBERG** syntax
 
-    a. Create **unique_tickets** table in an Iceberg table format
+    a. Create the `unique_tickets` table in an Iceberg table format
 
    ```
    drop table if exists ${prefix}_airlines.unique_tickets;
@@ -209,7 +209,7 @@ The primary goal of this is to build an ingestion data pipeline.
    STORED AS ICEBERG;
    ```
 
-   b. Ingest data into the **unique_tickets** table from the raw layer unique_tickets table
+   b. Ingest data into the `unique_tickets` table from the raw layer `unique_tickets` table
 
    ```
    INSERT INTO ${prefix}_airlines.unique_tickets
@@ -218,7 +218,7 @@ The primary goal of this is to build an ingestion data pipeline.
 
 5. Execute the following below queries to create a partitioned **flights** table with an Iceberg table format by using the **CREATE TABLE, PARTITIONED BY (column_list), STORED AS ICEBERG** syntax
 
-   a. Create a **flights** table, partitioned by the **year** column, with an Icebrerg table format
+   a. Create a `flights` table, partitioned by the **year** column, with an Icebrerg table format
 
    ```
    DROP TABLE IF EXISTS ${prefix}_airlines.flights;
@@ -248,9 +248,9 @@ The primary goal of this is to build an ingestion data pipeline.
 
    ![Show Create Table flights](/images/show_create_table_flights.png)
 
-   - Scroll to the right within the result to find the **PARTITIONED BY** clause
+   - Scroll to the right within the result to find the `PARTITIONED BY` clause
 
-   c. Ingest data into the **flights** table from the raw layer **flights** table. We will only select the flight data from 1995 to 2006.
+   c. Ingest data into the `flights` table from the raw layer `flights` table. We will only select the flight data from 1995 to 2006.
 
    ```
    INSERT INTO ${prefix}_airlines.flights
@@ -260,7 +260,7 @@ The primary goal of this is to build an ingestion data pipeline.
 
    - The **INSERT INTO** query may take several minutes to finish executing.
 
-   d. Query the newly created table, execute the below query - 
+   d. Query the newly created `flights` table by executing the query below -
 
    ```
    SELECT year, count(*) 

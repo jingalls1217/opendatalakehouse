@@ -1,10 +1,14 @@
 # 00_prereqs
 
+As part of the `Prerequisites`, we will walk through initial setup and configuration steps needed in your environment before we can proceed with the `Ingest` phase labs, including:
+
+- Set your **Workload Password** for your CDP user
+- Deploy a new Machine Learning (ML) project
+- Configure and deploy an Applied Machine Learning Prototype (AMP)
+
 ## Lab 1: Setup Workload Password for User
 
-1. Please ensure that you have completed the [labs](01_ingest.md#01_ingest) to ingest the data needed for Visualization.
-
-2. Set your CDP Workload Password
+1. Set your CDP Workload Password
 
     a. On your browser navigate back to the CDP Management Console
 
@@ -30,7 +34,7 @@
 
     ![Screen_Shot_Reset_WL_success.png](images/Screen_Shot_Reset_WL_success.png)
 
-3. In Cloudera Machine Learning (CML), provide your CDP Workload Password
+2. In Cloudera Machine Learning (CML), provide your CDP Workload Password
 
     a. Open Cloudera Machine Learning (CML)
 
@@ -58,9 +62,9 @@
 
 # Cloudera Machine Learning (CML) Project
 
-In this phase, we will be deploying an end\-to\-end machine learning project that will also be used in the , [03_visualize](03_visualize.md) and [04_predict](04_predict.md) phases.
+In this phase, we will be deploying an end\-to\-end machine learning project that will also be used in the [03_visualize](03_visualize.md) and [04_predict](04_predict.md) phases.
 
-## Lab 2: Deploy Machine Learning Applied Machine Learning Prototype (AMP)
+## Lab 2: Deploy an ML AMP
 
 1. Open Cloudera Machine Learning (CML)
 
@@ -90,7 +94,7 @@ In this phase, we will be deploying an end\-to\-end machine learning project tha
 
     ![Screen_Shot_CML _Projects_page.png](images/Screen_Shot_CML_Projects_page.png)
 
-We have now created a Cloudera Machine Learning (CML) Project that will be populated with all of the content making up the AMP we just deployed.  This includes data, code, files, model definition, and a Flask application.
+We have now created a Cloudera Machine Learning (CML) Project that will be populated with all of the content making up the AMP we just deployed. This includes data, code, files, model definition, and a Flask application.
 
 ## Lab 3: Configure and Deploy Canceled Flight Prediction AMP
 

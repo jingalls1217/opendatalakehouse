@@ -125,45 +125,35 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
 
 16. Click on `EDIT FIELDS`
 
---need screenshot--
-
 17. Change default behavior of Fields
 * Cloudera Data Visualization (CDV) will try to classify the columns from each table into a Category (ie. Dimension or Measure) to control default beahavior of the Field
   * Dimensions - data that you will not usually aggregate and instead will 
   * Measures - would be fields that you would be aggregating (sum, count, average, etc.)
 * This is important as CDV will use this information to assist in easing repetitive work and simplify building visuals
 
-* Under Measures
-  - Click the `Mes` toggle button next to `month`
-dayofmonth
-dayofweek
-deptime
-crsdeptime
-arrtime
-crsarrtime
-flightnum
+* Under Measures - Click the `Mes` toggle button next to the following Fields, this will change the Field to a `Dim` 
+  *  `month`
+  * `dayofmonth`
+  * `dayofweek`
+  * `deptime`
+  * `crsdeptime`
+  * `arrtime`
+  * `crsarrtime`
+  * `flightnum`
+![CDV Change Category Type](images/CDV_change_category_type.png)
 
-    --Need Screenshot--
-
-18. Under Dimensions > airlines, click the Pencil next to `description`
+18. Under `Dimensions > airlines`, click the pencil next to `description`
    * Change `Display Name` to Carrier
    * Click `APPLY`
+![CDV Edit Airlines Desc](images/CDV_edit_airlines_desc.png)
 
-    --Need Screenshot--
-
-
-19. Under Dimensions > airports, click the Pencil next to `city`
+19. Under `Dimensions > airports`, click the pencil next to `city`
    * Change `Display Name` to Origin City
    * Click `APPLY`
 
-    --Need Screenshot--
-
-20. Under Dimensions > airports_1, click the Pencil next to `city`
+20. Under `Dimensions > airports_1`, click the pencil next to `city`
    * Change `Display Name` to Destination City
    * Click `APPLY`
-
-    --Need Screenshot--
-
 
 21. Add a derived field, `flightdate`
    * Sometimes the data in the base tables does not support needs. There is no timestamp representing the flight date. So, instead of adding these expressions for every visual created we can define it here.
@@ -172,8 +162,9 @@ a. Under Measures > flights, click the drop down arrow to the right of `month`, 
 
 b. Under Dimensions > airports, click the Pencil next to `Copy of month`
    * Change `Display Name` to Flight Date
+![CDV Edit Flight Date basic settings](images/CDV_edit_flight_date_basic_settings.png)
 
-   * Click the `Expression` tab and paste the following
+c. Click the `Expression` tab and paste the following
 ```
 CAST(CONCAT(CAST(`year` AS STRING) , '-', CAST(`month` AS STRING), '-', CAST(`dayofmonth` AS STRING))
 AS DATE FORMAT 'yyyy-mm-dd')
@@ -182,13 +173,23 @@ AS DATE FORMAT 'yyyy-mm-dd')
    * Click `VALIDATE EXPRESSION` to test the expression is valid
 
    * Click `APPLY`
+![CDV Flight Date Expression](images/CDV_flight_date_expression.png)
 
-   * After the Field is saved you will see it has automatically set the data type to a Timestamp
+d. After the Field is saved you will see it has automatically set the data type to a Timestamp, to the left of `Flight Date` you will see a drop down and a calendar
+![CDV Flight Date Expression](images/CDV_flight_date_complete.png)
 
 20. Click 'SAVE' to save the Dataset
 
 --Need Screenshot--
 
+
+* To compare what we just did to this Dataset, we can compare it to the following SQL
+
+   `select B.description as carrier, C.city as origincity, D.city as destinationcity, A.*, CAST(CONCAT(CAST(year AS STRING) , '-', CAST(month AS STRING), '-', CAST(dayofmonth AS STRING)) AS DATE FORMAT 'yyyy-mm-dd') as flightdate from airlines.flights A INNER JOIN airlines.airlines B ON A.uniquecarrier = B.code INNER JOIN airlines.airports C ON A.origin = C.iata INNER JOIN airlines.airports D ON A.dest = D.iata`
+
+   * In this SQL you can see the Joins between Flights and Airlines; Flights and Airports for origin airport; and Flights to Airports for destination airport
+
+   * You can also see that `B.description as carrier`, `C.city as origincity`, and `D.city as destinationcity` all represent 
 
 ## Lab 2: Create a Dashboard
 

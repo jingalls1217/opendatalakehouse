@@ -24,166 +24,200 @@ A `Dataset`, aka Data Model, is a logical representation of the data you want to
 ![Screen_Shot_cml_cdv_home.png](images/Screen_Shot_cml_cdv_home.png)
 
 2. On the top, click `DATASETS`
-![Datasets header link](images/CDV_Datasets_header_link.png)
+
+    ![Datasets header link](images/CDV_Datasets_header_link.png)
 
 3. Now click `New Dataset`
-    - In this lab, the Dataset we want to create will join the `flights` Iceberg table to the `airports` Iceberg table for the Origin Airport details and again for the Destination Airport details 
-   ![CDV_erd.png](images/CDV_erd.png)
 
-    - `Dataset title` as `<prefix>-airlines-master`, replace &lt;prefix> with your prefix you used in 01_ingest phase
+    - The Dataset we want to create will join the `flights` Iceberg table to the `airports` Iceberg table for the Origin Airport details and again for the Destination Airport details 
+
+    ![CDV_erd.png](images/CDV_erd.png)
+
+    - `Dataset title` as `<prefix>-airlines-master`, replace `<prefix>` with your prefix you used in 01_ingest phase
 
     - `Dataset Source` lets you choose between directly entering SQL or selecting tables from our Data Lakehouse.  Select `From Table`
 
-    - In `Select Database` choose the `<prefix>_airlines` database you created in 01_ingest
+    - In `Select Database` choose the `<prefix>_airlines` database you created in [01_ingest](01_ingest.md#01_ingest)
     
     - In `Select Table` choose the `flights` Iceberg table
 
     - Click `CREATE` to create the Dataset (Data Model)
-    ![CDV_new_dataset](images/CDV_new_dataset.png)
+
+        ![CDV_new_dataset](images/CDV_new_dataset.png)
 
 4. You will be taken back to the Datasets tab.  Under Title/Table, you will see the `<prefix>-airlines-master` Dataset we just created, click on it to open the Dataset.
-![CDV Dataset](images/CDV_dataset_link_to_edit.png)
+
+    ![CDV Dataset](images/CDV_dataset_link_to_edit.png)
 
 5. On the left nav, click on `Data Model`.
-![CDV Data Model left nav](images/CDV_data_model_left_nav.png)
+    
+    ![CDV Data Model left nav](images/CDV_data_model_left_nav.png)
 
 6. To Join tables to the `flights` table, click on `EDIT DATA MODEL`
-![CDV data model](images/CDV_dataset_data_model.png)
 
-7. Click the `+` to the right of the flights table to join a table
+    ![CDV data model](images/CDV_dataset_data_model.png)
 
-    - In `Database Name` choose the `<prefix>_airlines` database you created in 01_ingest
+7. Click the `+` to the right of the `flights` table to join a table
+
+    - In `Database Name` choose the `<prefix>_airlines` database you created in [01_ingest](01_ingest.md#01_ingest)
 
     - In `Table Name` choose the `airlines` table
 
     - Click on `SELECT`
-![CDV data model select airlines table](images/CDV_dm_airlines_table_select.png)
 
-     - If an `Edit Join` pops up, click `APPLY`
+        ![CDV data model select airlines table](images/CDV_dm_airlines_table_select.png)
 
-8. Click the `+` to the right of the flights table to join a table
+    - If an `Edit Join` pops up, click `APPLY`
 
-    - In `Database Name` choose the `<prefix>_airlines` database you created in 01_ingest
+8. Click the `+` to the right of the `flights` table to join a table
+
+    - In `Database Name` choose the `<prefix>_airlines` database you created in [01_ingest](01_ingest.md#01_ingest)
 
     - In `Table Name` choose the `airports` table
 
     - Click on `SELECT`
-![CDV data model select airlines table](images/CDV_dm_airports_origin_table_select.png)
+
+        ![CDV data model select airlines table](images/CDV_dm_airports_origin_table_select.png)
 
      - If an `Edit Join` pops up, click `APPLY`
 
 9. Click the `+` to the right of the flights table to join a table
 
-    - In `Database Name` choose the `<prefix>_airlines` database you created in 01_ingest
+    - In `Database Name` choose the `<prefix>_airlines` database you created in [01_ingest](01_ingest.md#01_ingest)
 
     - In `Table Name` choose the `airports` table
+    
+    - Click the `SELECT` button
 
-    - Click on `SELECT`
-![CDV data model select airlines table](images/CDV_dm_airports_dest_table_select.png)
+        ![CDV data model select airlines table](images/CDV_dm_airports_dest_table_select.png)
 
-     - If an `Edit Join` pops up, click `APPLY`
+    - If an `Edit Join` pops up, click `APPLY`
 
 10. Edit joins between flights and its dimension tables
 
-* Select ![CDV join](images/CDV_join_button.png) (join) between the flights table and each dimension table (airlines, airports, airports_1)
+    - Select ![CDV join](images/CDV_join_button.png) (join) between the flights table and each dimension table (airlines, airports, airports_1)
 
-* On `Join Details` select `Left` join for the type of join, and select `EDIT JOIN`
-![CDV Join Details](images/CDV_dm_join_details.png)
+    - On `Join Details` select `Left` join for the type of join, and select `EDIT JOIN`
 
- * On `Edit Join` screen
-![CDV Joins to configure](images/CDV_joins_to_configure.png)
+        ![CDV Join Details](images/CDV_dm_join_details.png)
 
-  a. Join between `flights` and `airlines`
-   - Under `<prefix>_airlines.flights` choose `uniquecarrier` from the drop-down
+    - On `Edit Join` screen
 
-   - Under `<prefix>_airlines.airlines` choose `code` from the drop-down
-![CDV Join Details](images/CDV_join_flights_airlines.png)
+        ![CDV Joins to configure](images/CDV_joins_to_configure.png)
 
-  b. Join between `flights` and `airlines` for the origin airport
-   - Under `<prefix>_airlines.flights` choose `origin` from the drop-down
+    a. Join between `flights` and `airlines`
+   
+    - Under `<prefix>_airlines.flights` choose `uniquecarrier` from the drop-down
 
-   - Under `<prefix>_airlines.airports` choose `iata` from the drop-down
-![CDV Join Details](images/CDV_join_flights_airports_origin.png)
+    - Under `<prefix>_airlines.airlines` choose `code` from the drop-down
 
-  c. Join between `flights` and `airlines` for the destination (dest) airport
-   - Under `<prefix>_airlines.flights` choose `dest` from the drop-down
+        ![CDV Join Details](images/CDV_join_flights_airlines.png)
 
-   - Under `<prefix>_airlines.airports` choose `iata` from the drop-down
-![CDV Join Details](images/CDV_join_flights_airports_dest.png)
+    b. Join between `flights` and `airlines` for the origin airport
 
-13. To test if the Joins are working, click on `SHOW DATA`, you will see a table of data representing the `flights` table being joined to the `airports` table for the Origin and Destination airport details
-![CDV Join Details](images/CDV_show_data_results.png)
+    - Under `<prefix>_airlines.flights` choose `origin` from the drop-down
 
-14. Click `SAVE`
+    - Under `<prefix>_airlines.airports` choose `iata` from the drop-down
+    
+        ![CDV Join Details](images/CDV_join_flights_airports_origin.png)
 
-15. Click on `Fields` in the left nav.  When building a Dataset it is common to:
+    c. Join between `flights` and `airlines` for the destination (dest) airport
 
-   * Provide user-friendly names for columns
-   * Create derived (calculate) attributes
-   * Assign default behavior (Dimension or Measure) of a field
-   * Change default aggregation of fields prevents common mistakes when building visuals
+    - Under `<prefix>_airlines.flights` choose `dest` from the drop-down
+
+    - Under `<prefix>_airlines.airports` choose `iata` from the drop-down
+
+        ![CDV Join Details](images/CDV_join_flights_airports_dest.png)
+
+13. To test if the Joins are working, click on `SHOW DATA`. You will see a table of data representing the `flights` table being joined to the `airports` table for the Origin and Destination airport details
+
+    ![CDV Join Details](images/CDV_show_data_results.png)
+
+14. Click the `SAVE` button
+
+15. Click on `Fields` in the left nav.
+
+    - When building a Dataset, it is common to:
+
+        - Provide user-friendly names for columns
+        - Create derived (calculate) attributes
+        - Assign default behavior (Dimension or Measure) of a field
+        - Change default aggregation of fields prevents common mistakes when building visuals
 
 16. Click on `EDIT FIELDS`
 
 17. Change default behavior of Fields
-* Cloudera Data Visualization (CDV) will try to classify the columns from each table into a Category (ie. Dimension or Measure) to control default beahavior of the Field
-  * Dimensions - data that you will not usually aggregate and instead will 
-  * Measures - would be fields that you would be aggregating (sum, count, average, etc.)
-* This is important as CDV will use this information to assist in easing repetitive work and simplify building visuals
 
-* Under Measures - Click the `Mes` toggle button next to the following Fields, this will change the Field to a `Dim` 
-  *  `month`
-  * `dayofmonth`
-  * `dayofweek`
-  * `deptime`
-  * `crsdeptime`
-  * `arrtime`
-  * `crsarrtime`
-  * `flightnum`
-![CDV Change Category Type](images/CDV_change_category_type.png)
+    - Cloudera Data Visualization (CDV) will try to classify the columns from each table into a Category (ie. Dimension or Measure) to control default beahavior of the Field
+    
+    - Dimensions - data that you will not usually aggregate and instead will 
+    
+    - Measures - would be fields that you would be aggregating (sum, count, average, etc.)
+    
+    - This is important as CDV will use this information to assist in easing repetitive work and simplify building visuals
+
+    - Under Measures - Click the `Mes` toggle button next to the following Fields, this will change the Field to a `Dim` 
+
+        - `month`
+        - `dayofmonth`
+        - `dayofweek`
+        - `deptime`
+        - `crsdeptime`
+        - `arrtime`
+        - `crsarrtime`
+        - `flightnum`
+
+        ![CDV Change Category Type](images/CDV_change_category_type.png)
 
 18. Under `Dimensions > airlines`, click the pencil next to `description`
-   * Change `Display Name` to Carrier
-   * Click `APPLY`
-![CDV Edit Airlines Desc](images/CDV_edit_airlines_desc.png)
+
+    - Change `Display Name` to Carrier
+    - Click the `APPLY` button
+
+    ![CDV Edit Airlines Desc](images/CDV_edit_airlines_desc.png)
 
 19. Under `Dimensions > airports`, click the pencil next to `city`
    * Change `Display Name` to Origin City
-   * Click `APPLY`
+   * Click the `APPLY` button
 
 20. Under `Dimensions > airports_1`, click the pencil next to `city`
    * Change `Display Name` to Destination City
-   * Click `APPLY`
+   * Click the `APPLY` button
 
 21. Add a derived field, `flightdate`
-   * Sometimes the data in the base tables does not support needs. There is no timestamp representing the flight date. So, instead of adding these expressions for every visual created we can define it here.
 
-a. Under Measures > flights, click the drop down arrow to the right of `month`, select `Clone`
+    - Sometimes the data in the base tables does not support needs. There is no timestamp representing the flight date. So, instead of adding these expressions for every visual created we can define it here.
 
-b. Under Dimensions > airports, click the Pencil next to `Copy of month`
-   * Change `Display Name` to Flight Date
-![CDV Edit Flight Date basic settings](images/CDV_edit_flight_date_basic_settings.png)
+    a. Under Measures > flights, click the drop down arrow to the right of `month`, select `Clone`
 
-c. Click the `Expression` tab and paste the following
-```
-CAST(CONCAT(CAST(`year` AS STRING) , '-', CAST(`month` AS STRING), '-', CAST(`dayofmonth` AS STRING))
-AS DATE FORMAT 'yyyy-mm-dd')
-```
+    b. Under Dimensions > airports, click the Pencil next to `Copy of month`
 
-   * Click `VALIDATE EXPRESSION` to test the expression is valid
+    - Change `Display Name` to Flight Date
 
-   * Click `APPLY`
-![CDV Flight Date Expression](images/CDV_flight_date_expression.png)
+        ![CDV Edit Flight Date basic settings](images/CDV_edit_flight_date_basic_settings.png)
 
-d. After the Field is saved you will see it has automatically set the data type to a Timestamp, to the left of `Flight Date` you will see a drop down and a calendar
-![CDV Flight Date Expression](images/CDV_flight_date_complete.png)
+    c. Click the `Expression` tab and paste the following
+
+    ```
+    CAST(CONCAT(CAST(`year` AS STRING) , '-', CAST(`month` AS STRING), '-', CAST(`dayofmonth` AS STRING))
+    AS DATE FORMAT 'yyyy-mm-dd')
+    ```
+
+    - Click the `VALIDATE EXPRESSION` button to test the expression is valid
+
+    - Click the `APPLY` button
+
+        ![CDV Flight Date Expression](images/CDV_flight_date_expression.png)
+
+    d. After the Field is saved you will see it has automatically set the data type to a Timestamp, to the left of `Flight Date` you will see a drop down and a calendar
+
+    ![CDV Flight Date Expression](images/CDV_flight_date_complete.png)
 
 20. Click 'SAVE' to save the Dataset
 
 --Need Screenshot--
 
-
-* To compare what we just did to this Dataset, we can compare it to the following SQL
+- To compare what we just did to this Dataset, we can compare it to the following SQL
 
    `select B.description as carrier, C.city as origincity, D.city as destinationcity, A.*, CAST(CONCAT(CAST(year AS STRING) , '-', CAST(month AS STRING), '-', CAST(dayofmonth AS STRING)) AS DATE FORMAT 'yyyy-mm-dd') as flightdate from airlines.flights A INNER JOIN airlines.airlines B ON A.uniquecarrier = B.code INNER JOIN airlines.airports C ON A.origin = C.iata INNER JOIN airlines.airports D ON A.dest = D.iata`
 

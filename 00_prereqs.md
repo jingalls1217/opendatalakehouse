@@ -1,8 +1,9 @@
 # 00_prereqs
 
-As part of the `Prerequisites`, we will walk through initial setup and configuration steps needed in your environment before we can proceed with the `Ingest` phase labs, including:
+As part of the `Prerequisites`, we will walk through the initial setup and configuration steps needed in your environment before we can proceed with the `Ingest` phase labs, including:
 
 - Set your **Workload Password** for your CDP user
+- Decide on a unique **Prefix** that will identify the databases you will create
 - Deploy a new Machine Learning (ML) project
 - Configure and deploy an Applied Machine Learning Prototype (AMP)
 
@@ -104,12 +105,14 @@ We have now created a Cloudera Machine Learning (CML) Project that will be popul
 
 2. CML will now give the user a series of Environment Variables to fill in. Fill as below:
 
-    - `STORAGE_MODE` as local
-    - `SPARK_CONNECTION_NAME` with the Environment Name we collected above.
-    - `DW_DATABASE` as `<prefix>_airlines` - where &lt;prefix> is the same &lt;prefix> you used in the 01_ingest phase
-    - `DW_TABLE` as `flights`
-    - `USE_PREBUILT_MODEL` as `no`
-    - Enable the button next to `Enable Spark`
+    - For this step, you will need to choose a **Prefix** that will uniquely identify the databases you will create in the labs (e.g. `evolve`)
+
+        - `STORAGE_MODE` as local
+        - `SPARK_CONNECTION_NAME` with the Environment Name we collected above.
+        - `DW_DATABASE` as `<prefix>_airlines` - where `<prefix>` is the unique database name prefix you will reference in other labs
+        - `DW_TABLE` as `flights`
+        - `USE_PREBUILT_MODEL` as `no`
+        - Enable the button next to `Enable Spark`
 
 3. Leave the rest of the fields with their default values.
 

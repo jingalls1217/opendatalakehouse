@@ -77,7 +77,9 @@ SELECT
 FROM
    ${prefix}_airlines.unique_tickets a,
    ${prefix}_airlines.flights o,
-   ${prefix}_airlines.flights d
+   ${prefix}_airlines.flights d,
+   ${prefix}_airlines.airports leg1origin,
+   ${prefix}_airlines.airports leg2dest
 WHERE
    a.leg1flightnum = o.flightnum
    AND a.leg1uniquecarrier = o.uniquecarrier
@@ -92,13 +94,16 @@ WHERE
    AND a.leg2month = d.month
    AND a.leg2dayofmonth = d.dayofmonth
    AND a.leg2dayofweek = d.`dayofweek`
+   AND a.leg1origin = leg1origin.iata
+   AND a.leg2dest = leg2dest.iata
 
+   AND leg1origin.country <> leg2dest.country
    AND a.leg2deptime - a.leg1arrtime > 90
 
 GROUP BY
    a.leg1uniquecarrier
 ORDER BY
-   a.leg1uniquecarrier DESC;
+   COUNT(*) DESC;
 ```
 ![Flights with Long Layovers](/images/analyze.query.long.layovers.png)
 

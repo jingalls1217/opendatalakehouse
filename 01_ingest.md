@@ -20,7 +20,6 @@ The primary goal of this is to build an ingestion data pipeline.
 
 - In this lab, we will first create a **raw layer** in our Data Lakehouse. This raw layer will be created by leveraging CSV data that has already been stored in our Public Cloud storage, in this lab we will use S3, for the 5 tables mentioned above
 - This lab is meant to show how quickly you can take raw data and enable the ability to execute SQL queries against that data
-- As part of the lab, you will need to come up with a **Prefix** that will uniquely identify the databases you will create as part of this trial
 
 1. In your CDP Home Page, click on **Data Hub Clusters**. (For more information about Data Hub, here is a [product tour](https://www.cloudera.com/products/data-hub/cdp-tour-data-hub.html))
 

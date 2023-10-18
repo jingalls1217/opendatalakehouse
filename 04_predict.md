@@ -106,42 +106,53 @@ In this Lab we will create a new Python program that will connect to our Data La
 Once you complete this lab, you will have now used 2 analytical tools to interact with the same, ***single copy*** of data from our Data Lakehouse.  There was no need to make a copy of the data and the same security policies that would be setup on this table also carry forward when using any Cloudera Data Service to access this data.
 
 1. Return to CML - click browser tab `Applications - Cloudera Machine Learning`
-![Screen_Shot_2023_04_25_at_12_08_43_AM.png](images/CML_return_to_Apps_page.png)
+![CML Return](images/CML_return_to_Apps_page.png)
 
 2. In left nav, select `Files`
 
 3. Click `+ New` in the top right corner, to create a New File
+![Create New File](images/CML_create_new_file.png)
 
-4. 
-* File Name: iceberg_query.py
-* Check Open in Editor
+4. Provide file name and click `Create`
+   * File Name: iceberg_query.py
+   * Check Open in Editor
+![New File Name](images/CML_new_file_name.png)
 
+5. Start New Session - replace &lt;prefix> with your prefix you've been using
+   * Name: &lt;prefix>-iceberg-query-session
+   * Under `Runtime`
+      * Editor: Workbench ()
+      * Kernel: Python 3.9
+      * Edition: Standard
+      * Version: leave default value here
+   * Enable Spark: make sure this is active, and select Spark 3.2.3 (minimum: Spark 3 is required for Iceberg functionality)
+   * Resource Profile: leave the default, but normally you would want to select the appropriate resource profile needed for the task you are trying to accomplish
+   * Click `Start Session`
 
-
-5. Start New Session
-* Name: iceberg-acid-session
-* Editor: Workbench
-* Enable Spark, and select Spark 3.2.0 (minimum: Spark 3 is required for Iceberg functionality)
 
 6. From the Connection Code Snippet find and select the tile with TYPE = “Spark Data Lake”
 Click the `Copy Code` button in the top right corner of the Code Snippet and click Close
+Click `Close`
 
 7. When you are back in the Workbench, paste the code into the Editor
 
-8. Copy paste the following code, replacing <user-id> with your user id, into the Workbench Editor after the code you copied connecting to the Spark Connection (from above screen you would start on line ??).  
+8. Copy paste the following code, replacing &lt;prefix> with your prefix, into the Workbench Editor after the code you copied connecting to the Spark Connection.  
 
 ```
 ### Code to add
-# Replace <user-id> with your user id in the following code
+# Replace <prefix> with your prefix in the following code
 
 # Query Raw Data Table
-spark.sql("SELECT * FROM <user-id>_airlines.flights limit 50").show()
+spark.sql("SELECT * FROM <prefix>_airlines.flights limit 50").show()
 ```
+
 
 9. Once you’ve pasted the code at the end of the connection click on Run > Run All
 
    * The Session output will look like the following, and you should see the output from the `flights` table
 
 10. From the left top menu, click `File > Save`
+
+11. Stop the Session
 
 Now we are ready to take a look at some of the interesting features Iceberg has to offer.  Please visit [05_iceberg](05_iceberg.md) to explore Iceberg feature in more detail.

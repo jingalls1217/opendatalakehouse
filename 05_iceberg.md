@@ -12,16 +12,50 @@ In this phase:
 
 ## Lab 1: Schema Evolution 
 
-1. 
+1. Open HUE - SQL Editor
+steps...
 
-2. 
+2. In the table browser viewer (left side of screen) navigate to your `<prefix>_airlines` database
+   * Click `<` to the left of `default` database
 
+   * In the list under `Databases` click on your `<prefix>_airlines` database
+      * If you don't see your database, click the refresh button to the right of `Databases`
+
+
+3. Click `airlines` table under `Tables` to see columns in this table
+   * The current table has 2 columns: `code` and `description`
+
+
+4. **In-place Schema Evolution Feature**
+
+```
+ALTER TABLE ${prefix}_airlines.airlines ADD COLUMNS(status STRING, updated TIMESTAMP);
+```
+   * The existing table data is **not modified** with this statement
+
+5. Refresh table browser to see new columns added
+   * Click on the refresh button to the right of `Tables`
+   * Click `airlines` table to see the new columns: `status` and `updated`
+
+
+6. Add data into the new schema for `airlines` table
+
+```
+INSERT INTO ${prefix}_airlines.airlines
+VALUES("Z999","Adrenaline Airways","NEW",now());
+```
+
+7. Query `airlines` table to see old and new schema data
+
+```
+SELECT * FROM airlines WHERE code > "Z";
+```
+   * As you scroll through the results you will see the 2 columns that we added will contain "NULL" values for the data that was already in the table and the new record we inserted will have value in the new columns `status` and `updated`
 
 
 ## Lab 2: Partition Evolution 
 
-1. Open HUE - SQL Editor
-steps...
+1. Remain in the SQL Editor
 
 2. See current Partition details
 

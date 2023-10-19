@@ -121,22 +121,27 @@ Once you complete this lab, you will have now used 2 analytical tools to interac
 5. Start New Session - replace &lt;prefix> with your prefix you've been using
    * Name: &lt;prefix>-iceberg-query-session
    * Under `Runtime`
-      * Editor: Workbench ()
+      * Editor: Workbench (however, other Editors are available)
       * Kernel: Python 3.9
       * Edition: Standard
       * Version: leave default value here
    * Enable Spark: make sure this is active, and select Spark 3.2.3 (minimum: Spark 3 is required for Iceberg functionality)
    * Resource Profile: leave the default, but normally you would want to select the appropriate resource profile needed for the task you are trying to accomplish
    * Click `Start Session`
+![Start New Session](images/CML_create_session.png)
 
+6. From the Connection Code Snippet 
+   * Find and select the tile with TYPE = `Spark Data Lake`
+   * Click the `Copy Code` button in the top right corner of the Code Snippet
+   * Click `Close`
+![Start New Session](images/CML_copy_spark_code_snipet.png)
 
-6. From the Connection Code Snippet find and select the tile with TYPE = “Spark Data Lake”
-Click the `Copy Code` button in the top right corner of the Code Snippet and click Close
-Click `Close`
+7. In the Workbench, paste the code into the Editor window on the left half of the screen
+   * This code represents how you can connect to Spark
+![Paste Code Snipet](images/CML_paste_code_snipet.png)
 
-7. When you are back in the Workbench, paste the code into the Editor
-
-8. Copy paste the following code, replacing &lt;prefix> with your prefix, into the Workbench Editor after the code you copied connecting to the Spark Connection.  
+8. Add the following code to the end of the connection
+   * Copy paste the following code, replacing &lt;prefix> with your prefix, into the Workbench Editor after the code you copied connecting to the Spark Connection.  
 
 ```
 ### Code to add
@@ -145,14 +150,22 @@ Click `Close`
 # Query Raw Data Table
 spark.sql("SELECT * FROM <prefix>_airlines.flights limit 50").show()
 ```
-
+![Add Iceberg Table Query](images/CML_add_query_iceberg_table.png)
 
 9. Once you’ve pasted the code at the end of the connection click on Run > Run All
+![Run Code](images/.png)
 
-   * The Session output will look like the following, and you should see the output from the `flights` table
+   * In the Session output you will see:
+     * Code starting and connecting to Spark
+     * A list of Databases - where you should see your 2 databases &lt;prefix>_airlines_raw and &lt;prefix>_airlines in the list
+     * Results from the `flights` Iceberg table
+![Run Code Output](images/CML_Code_Run_output.png)
 
-10. From the left top menu, click `File > Save`
+10. To Save the Python code - from the left top menu, click `File > Save`
+![Run All Lines](images/CML_Run_All_Lines.png)
 
-11. Stop the Session
+11. Stop the Session - in the top right corner click on `Stop`
+   * This will free up the compute resources we were just using
+![Stop Session](images/CML_stop_session.png)
 
 Now we are ready to take a look at some of the interesting features Iceberg has to offer.  Please visit [05_iceberg](05_iceberg.md) to explore Iceberg feature in more detail.

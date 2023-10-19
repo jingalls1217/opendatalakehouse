@@ -1,194 +1,111 @@
 # Iceberg Capabilities 
 
-In this lab, we will test some cool features of Iceberg in Impala including in-place Table Evolution features, Time Travel, and ACID transactions.
+In this phase: 
+   * We will test some cool features of Iceberg in Impala including in-place Table Evolution features - Partition & Schema, and Time Travel
+   * Modify the CML Project `Canceled Flight Prediction` to use the airlines data from the Data Lakehouse instead of the data that is included with the AMP that was deployed.  This simulates how you can use the AMPs to get a starting point and modify to fit your use case.
 
-## Lab 1: Ingest Data 
 
-1. In your CDP Home Page, click on `Data Hub Clusters`
+## Prerequisites
 
-  - For more information about Data Hub, please visit the [Product Tour](https://www.cloudera.com/products/data-hub/cdp-tour-data-hub.html)
+1. Please ensure that you have completed [00_prereqs](00_prereqs.md) to deploy the Applied Machine Learning Prototype (AMP) for `Canceled Flight Prediction`.
+2. Please ensure that you have completed [01_ingest](01_ingest.md#01_ingest) to ingest the data needed for Visualizations.
 
-  ![Screen_Shot_2023_04_23_at_2_27_29_PM.png](images/Screen_Shot_2023_04_23_at_2_27_29_PM.png)
 
-2. In the Data Hub Clusters landing page - 
+## Lab 1: Partition Evolution 
 
-   a. Note the **Environment Name** as it will be used as one of the inputs while we create tables
-   
-   b. Click on the Data Hub called `dwarehouse`. 
+1. Open HUE - SQL Editor
 
-  ![Screenshot_2023_05_31_at_5_13_05_PM.png](images/Screenshot_2023_05_31_at_5_13_05_PM.png)
+2. 
 
-3. In the list of Services in the Data Hub, click on **Hue** to open a new browser tab for the Impala query user interface in Hue.
-
-  ![Screenshot_2023_05_31_at_5_13_36_PM.png](images/Screenshot_2023_05_31_at_5_13_36_PM.png)
-
-4. You will be taken to Impala Editor. Create databases called `airlines` and `airlines_csv` using the below queries - 
+3. **In-place Partition Evolution Feature**
 
 ```
-CREATE DATABASE airlines;
-CREATE DATABASE airlines_csv;
-```
-
-5. Create the `flights_csv` table from the CSV file stored in S3
-
-```
-DROP TABLE IF EXISTS airlines_csv.flights_csv;
-
-CREATE EXTERNAL TABLE airlines_csv.flights_csv (month int, dayofmonth int, dayofweek int, deptime int, crsdeptime int, arrtime int, crsarrtime int, uniquecarrier string, flightnum int, tailnum string, actualelapsedtime int, crselapsedtime int, airtime int, arrdelay int, depdelay int, origin string, dest string, distance int, taxiin int, taxiout int, cancelled int, cancellationcode string, diverted string, carrierdelay int, weatherdelay int, nasdelay int, securitydelay int, lateaircraftdelay int, year int)
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'
-STORED AS TEXTFILE LOCATION 's3a://${cdp_environment_name}/trial-odlh-data/airline-demo-data/flights' tblproperties("skip.header.line.count"="1");
-```
-
-  - In the `cdp_environment_name` field, enter the environment name you captured earlier
-
-6. Create the `planes_csv` table from the CSV file stored in S3
-
-```
-DROP TABLE IF EXISTS airlines_csv.planes_csv;
-
-CREATE EXTERNAL TABLE airlines_csv.planes_csv (tailnum string, owner_type string, manufacturer string, issue_date string, model string, status string, aircraft_type string, engine_type string, year int)
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'
-STORED AS TEXTFILE LOCATION 's3a://${cdp_environment_name}/trial-odlh-data/airline-demo-data/planes' tblproperties("skip.header.line.count"="1");
-```
-
-7. Create the `airlines_csv` table from the CSV file stored in S3
-
-```
-DROP TABLE IF EXISTS airlines_csv.airlines_csv;
-
-CREATE EXTERNAL TABLE airlines_csv.airlines_csv (code string, description string) 
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'
-STORED AS TEXTFILE LOCATION 's3a://${cdp_environment_name}/trial-odlh-data/airline-demo-data/airlines/' tblproperties("skip.header.line.count"="1");
-```
-
-8. Create the `airports_csv` table from the CSV file stored in S3
-
-```
-DROP TABLE IF EXISTS airlines_csv.airports_csv;
-
-CREATE EXTERNAL TABLE airlines_csv.airports_csv (iata string, airport string, city string, state DOUBLE, country string, lat DOUBLE, lon DOUBLE)
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'
-STORED AS TEXTFILE LOCATION 's3a://${cdp_environment_name}/trial-odlh-data/airline-demo-data/airports' tblproperties("skip.header.line.count"="1");
-```
-
-9. Create the `unique_tickets_csv` table from the CSV file stored in S3
-
-```
-DROP TABLE IF EXISTS airlines_csv.unique_tickets_csv;
-
-CREATE external TABLE airlines_csv.unique_tickets_csv (ticketnumber BIGINT, leg1flightnum BIGINT, leg1uniquecarrier STRING, leg1origin STRING,   leg1dest STRING, leg1month BIGINT, leg1dayofmonth BIGINT,   
- leg1dayofweek BIGINT, leg1deptime BIGINT, leg1arrtime BIGINT,   
- leg2flightnum BIGINT, leg2uniquecarrier STRING, leg2origin STRING,   
- leg2dest STRING, leg2month BIGINT, leg2dayofmonth BIGINT,   leg2dayofweek BIGINT, leg2deptime BIGINT, leg2arrtime BIGINT ) 
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' 
-STORED AS TEXTFILE LOCATION 's3a://${cdp_environment_name}/trial-odlh-data/airline-demo-data/unique_tickets' 
-tblproperties("skip.header.line.count"="1");
-```
-
-10. Create the `unique_tickets` table using Hive table format stored as Parquet, to be used further down to query alongside the Iceberg table
-
-```
-DROP TABLE IF EXISTS airlines.unique_tickets;
-
-CREATE EXTERNAL TABLE airlines.unique_tickets (
-  ticketnumber BIGINT, leg1flightnum BIGINT, leg1uniquecarrier STRING,
-  leg1origin STRING,   leg1dest STRING, leg1month BIGINT,
-  leg1dayofmonth BIGINT, leg1dayofweek BIGINT, leg1deptime BIGINT,
-  leg1arrtime BIGINT, leg2flightnum BIGINT, leg2uniquecarrier STRING,
-  leg2origin STRING, leg2dest STRING, leg2month BIGINT, leg2dayofmonth BIGINT,
-  leg2dayofweek BIGINT, leg2deptime BIGINT, leg2arrtime BIGINT 
-) 
-STORED AS PARQUET 
-TBLPROPERTIES ('external.table.purge'='true');
-
-INSERT INTO airlines.unique_tickets
-  SELECT * FROM airlines_csv.unique_tickets_csv;
-```
-
-11. **Create Iceberg Table Feature**
-
-- Create Table as Select (CTAS) - create a new table
-
-```
-DROP TABLE IF EXISTS airlines.planes;
-
-CREATE EXTERNAL TABLE airlines.planes 
-STORED AS ICEBERG 
-TBLPROPERTIES ('external.table.purge'='true')
-AS SELECT * FROM airlines_csv.planes_csv;
-
-DESCRIBE FORMATTED airlines.planes;
-
-DROP TABLE IF EXISTS airlines.airports;
-
-CREATE EXTERNAL TABLE airlines.airports
-STORED BY ICEBERG
-TBLPROPERTIES ('external.table.purge'='true')
-AS SELECT * FROM airlines_csv.airports_csv;
-
-DESCRIBE FORMATTED airlines.airports;
-```
-In the output - look for table_type in the Table Parameters section to ensure that the table is in “ICEBERG” format
-
-- Create table (partitioned) feature
-
-```
-DROP TABLE IF EXISTS airlines.flights;
-
-CREATE TABLE airlines.flights (
- month int, dayofmonth int, 
- dayofweek int, deptime int, crsdeptime int, arrtime int, 
- crsarrtime int, uniquecarrier string, flightnum int, tailnum string, 
- actualelapsedtime int, crselapsedtime int, airtime int, arrdelay int, 
- depdelay int, origin string, dest string, distance int, taxiin int, 
- taxiout int, cancelled int, cancellationcode string, diverted string, 
- carrierdelay int, weatherdelay int, nasdelay int, securitydelay int, 
- lateaircraftdelay int
-) 
-PARTITIONED BY (year int)
-STORED AS ICEBERG;
-
-SHOW CREATE TABLE airlines.flights;
-```
-In the output - look for the following - PARTITIONED BY SPEC as year, table_type is ICEBERG
-
-- Load Data into Partitioned Iceberg Table
-
-```
-INSERT INTO airlines.flights
- SELECT * FROM airlines_csv.flights_csv
- WHERE year <= 2006;
-```
-
-- Query Partitioned Iceberg Table
-
-```
-SELECT year, count(*) 
-FROM airlines.flights
-GROUP BY year
-ORDER BY year desc;
-```
-
-- Partition Evolution
-
-```
-ALTER TABLE airlines.flights
+ALTER TABLE ${prefix}_airlines.flights
 SET PARTITION spec ( year, month );
 
-SHOW CREATE TABLE airlines.flights;
+SHOW CREATE TABLE ${prefix}_airlines.flights;
 ```
-In the output - PARTITIONED BY SPEC is now updated with year and month
 
-- Load Data into Iceberg Table using NEW Partition
+   * In the output - PARTITIONED BY SPEC is now updated with year and month
+   * The data that was currently written to the flights table is **NOT** rewritten
+   * When new data is written to this table it will use the new partition to write the data
+
+4. Load Data into Iceberg Table using **NEW** Partition of year and month
 
 ```
-INSERT INTO airlines.flights
- SELECT * FROM airlines_csv.flights_csv
+INSERT INTO ${prefix}_airlines.flights
+ SELECT * FROM ${prefix}_airlines_raw.flights
  WHERE year = 2007;
 ```
 
+2. Explain plan for the following query for year=2006 which will be using the first partition we created on `year`
+
+```
+EXPLAIN PLAN
+SELECT year, month, count(*) 
+FROM ${prefix}_airlines.flights
+WHERE year = 2006 AND month = 12
+GROUP BY year, month
+ORDER BY year desc, month asc;
+```
+
+![Original Partition Scans Year](images/.png)
+   * In the output you will see that the entire year of 2006 data needs to be scanned, which is ??MB
+
+3. Explain plan for the following query for year=2007 which will be using the **new** partition we created with `year` and `month`
+
+```
+EXPLAIN PLAN
+SELECT year, month, count(*) 
+FROM ${prefix}_airlines.flights
+WHERE year = 2007 AND month = 12
+GROUP BY year, month
+ORDER BY year desc, month asc;
+```
+![New Partition Leads to Partition Pruning](images/.png)
+   * In the output you will see that just the month of December for year 2007 needs to be scanned, which is approximately 11MB
 
 
+## Lab 2: Schema Evolution 
+
+1. Open HUE - SQL Editor
+
+2. 
 
 
+## Lab 3: Time Travel
+
+1. Run the
+```
+DESCRIBE HISTORY ${prefix}_airlines.flights;
+```
+2. 
+-- SELECT DATA USING TIMESTAMP FOR SNAPSHOT
+SELECT year, count(*) 
+FROM ${user_id}_airlines.flights
+  FOR SYSTEM_TIME AS OF '${create_ts}'
+GROUP BY year
+ORDER BY year desc;
+
+-- SELECT DATA USING TIMESTAMP FOR SNAPSHOT
+SELECT year, count(*) 
+FROM ${user_id}_airlines.flights
+  FOR SYSTEM_VERSION AS OF ${snapshot_id}
+GROUP BY year
+ORDER BY year desc;
+
+2. 
+
+
+## Lab 4: Use Data Lakehouse to re-train Model
+
+1. Open CML - SQL Editor
+
+2. Open Project `Canceled Flight Prediction`
+
+3. Click on Files
+
+4. Click on the directory `code`
+
+5. Click on the file `0`
 

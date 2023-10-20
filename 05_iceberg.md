@@ -17,25 +17,32 @@ steps...
 
 2. In the table browser viewer (left side of screen) navigate to your `<prefix>_airlines` database
    * Click `<` to the left of `default` database
+![Table Browser default db](images/SchemaEvolution_1.png)
 
    * In the list under `Databases` click on your `<prefix>_airlines` database
+![List of Databases](images/SchemaEvolution_2.png)
+
       * If you don't see your database, click the refresh button to the right of `Databases`
 
-
 3. Click `airlines` table under `Tables` to see columns in this table
-   * The current table has 2 columns: `code` and `description`
+![Tables in Database](images/SchemaEvolution_3.png)
 
+   * The current table that we created in `01_ingest` has 2 columns: `code` and `description`
 
 4. **In-place Schema Evolution Feature**
 
 ```
 ALTER TABLE ${prefix}_airlines.airlines ADD COLUMNS(status STRING, updated TIMESTAMP);
 ```
+
+![In Place Table Evolution](images/SchemaEvolution_Add_Columns.png)
+
    * The existing table data is **not modified** with this statement
 
 5. Refresh table browser to see new columns added
    * Click on the refresh button to the right of `Tables`
    * Click `airlines` table to see the new columns: `status` and `updated`
+![Updated Table Metadata](images/SchemaEvolution_Updated_Metadata.png)
 
 
 6. Add data into the new schema for `airlines` table
@@ -51,6 +58,7 @@ VALUES("Z999","Adrenaline Airways","NEW",now());
 SELECT * FROM airlines WHERE code > "Z";
 ```
    * As you scroll through the results you will see the 2 columns that we added will contain "NULL" values for the data that was already in the table and the new record we inserted will have value in the new columns `status` and `updated`
+![View data after Schema Evolution](images/SchemaEvolution_View_Results.png)
 
 
 ## Lab 2: Partition Evolution 
@@ -63,8 +71,11 @@ SELECT * FROM airlines WHERE code > "Z";
 DESCRIBE FORMATTED ${prefix}_airlines.flights;
 ```
 
+![Current Partition](images/PartitionEvolution_Describe_before.png)
+   * The flights Iceberg table is currently partitioned by `year`
 
 3. **In-place Partition Evolution Feature**
+![Partition after Alter Table Set Part](images/PartitionEvolution_Alter_Table.png)
 
 ```
 ALTER TABLE ${prefix}_airlines.flights
@@ -73,11 +84,13 @@ SET PARTITION spec ( year, month );
 DESCRIBE FORMATTED ${prefix}_airlines.flights;
 ```
 
-   * In the output - PARTITIONED BY SPEC is now updated with year and month
-   * The data that was currently written to the flights table is **NOT** rewritten
-   * When new data is written to this table it will use the new partition to write the data
+![Partition after Alter Table Set Part](images/PartitionEvolution_Describe_after.png)
 
-4. Load Data into Iceberg Table using the **NEW Partition** of year and month
+   * In the output - Partition information is now updated with both year and month
+   * The data in the `flights` table is **not rewritten**
+   * When new data is written to this table it will use the new partition to write the new data
+
+4. Load Data into Iceberg Table using the **new Partition** of year and month
 
 ```
 INSERT INTO ${prefix}_airlines.flights
@@ -85,7 +98,7 @@ INSERT INTO ${prefix}_airlines.flights
  WHERE year = 2007;
 ```
 
-5. Check to see the new data for year=2007 has loaded
+5. Check to see the new data for year=2007 has loaded successfully
 
 ```
 SELECT year, count(*) 
@@ -93,7 +106,9 @@ FROM ${prefix}_airlines.flights
 GROUP BY year
 ORDER BY year desc;
 ```
-   * You will see I didn't have to do anything special to the SQL, u
+
+   * You will see I didn't have to do anything special to the SQL, and it returns data from both partition definitions
+![Results Alter Evolution and New Data Inserted](images/PartitionEvolution_Review_new_data.png)
 
 6. Explain plan for the following query for year=2006 which will be using the first partition we created on `year`
 
@@ -106,7 +121,7 @@ GROUP BY year, month
 ORDER BY year desc, month asc;
 ```
 
-![Original Partition Scans Year](images/.png)
+![Original Partition Scans Year](images/PartitionEvolution_Explain_2006_12.png)
    * In the output you will see that the entire year of 2006 data needs to be scanned, which is ~127MB
 
 3. Explain plan for the following query for year=2007 which will be using the **new** partition we created with `year` and `month`
@@ -119,7 +134,7 @@ WHERE year = 2007 AND month = 12
 GROUP BY year, month
 ORDER BY year desc, month asc;
 ```
-![New Partition Leads to Partition Pruning](images/.png)
+![New Partition Leads to Partition Pruning](images/PartitionEvolution_Explain_2007_12.png)
    * In the output you will see that just the month of December for year 2007 needs to be scanned, which is approximately 11MB
    * What happened in this query is we were able to leverage partition pruning to eliminate all of the partitions outside of `year=2007 and month=12` (ie. all data in years 1995 to 2006 and all months in 2007, except December).  This can lead to considerable gains in performance
 
@@ -131,6 +146,9 @@ ORDER BY year desc, month asc;
 ```
 DESCRIBE HISTORY ${prefix}_airlines.flights;
 ```
+
+![Time Travel Snapshots](images/.png)
+
 
 2. Explore Time Travel using a relative Date Time
 
@@ -152,22 +170,25 @@ GROUP BY year
 ORDER BY year desc;
 ```
 
-2. 
 
 
 ## Lab 4: Use Data Lakehouse to re-train Model
 
 1. Open CML
+instructions....
 
 2. Open Project `Canceled Flight Prediction`
+
 
 3. Explore the Data Processing code used to train the `Canceled Flight Prediction` Model
    * Click on Files
 
    * Click on the directory `code`
 
+
 5. Open the file `3_data_processing.py` in preview
    * This is the code used to pre-process the data by wrangling the data as needed into the format to train the model
+
 
 6. Scroll to the bottom of the code until you see the following
 
@@ -185,15 +206,18 @@ if __name__ == "__main__":
 
    * From this code we can see that it is checking the Environment variable `STORAGE_MODE`
 
+
 7. Scroll up to the line `def main():`
    * Within this code block  you can see that it is using Evironment Variable we set when deploying the AMP
    * There are 2 in particular the DW_DATABASE and DW_TABLE, if you remember we set these to our Data Lakehouse `flights` Iceberg table
    * Please familiarize yourself with the rest of the code to see some of the data wrangling that is done here
 
+
 8. Switch to `External` mode
    * Click on Project Settings on the left nav
    * Click on the `Advanced`
    * Under `Evnrionment Variables` change the value for the `STORAGE_MODE` to `external`
+
 
 9. Go
    * Click on Files
@@ -201,6 +225,7 @@ if __name__ == "__main__":
    * Click on the directory `code`
 
    * Open the file `3_data_processing.py` in preview
+
 
 10. Start New Session - replace &lt;prefix> with your prefix you've been using
    * Name: &lt;prefix>-data-processing-session
@@ -212,6 +237,7 @@ if __name__ == "__main__":
    * Enable Spark: make sure this is active, and select Spark 3.2.3 (minimum: Spark 3 is required for Iceberg functionality)
    * Resource Profile: select a larger profile, if available select the one for 4 vCPUs and 8 GiB Memory
    * Click `Start Session`
+
 
 11. Click on Run > Run All
 ![Run Code](images/.png)

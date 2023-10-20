@@ -7,27 +7,23 @@ As part of the `Prerequisites`, we will walk through the initial setup and confi
 - Deploy a new Machine Learning (ML) project
 - Configure and deploy an Applied Machine Learning Prototype (AMP)
 
+
 ## Lab 1: Setup Workload Password for User
 
 1. Set your CDP Workload Password
 
-    a. On your browser navigate back to the CDP Management Console
+    a. In your CDP Home Page
+![CDP Home Page](images/CDP_Home.png)
 
-    ![Return_to_cdp.png](images/Return_to_cdp.png)
-
-    b. Go back to the CDP Home Page by clicking the bento menu icon in the top left corner of the Data Hub page
-
-    ![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_2023_04_24_at_11_33_56_PM.png)
-
-    c. In the bottom left corner, find your user ID and click on it. In the popup, click on `Profile`
+    b. In the bottom left corner, find your user ID and click on it. In the popup, click on `Profile`
 
     ![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_User_Profile.png)
 
-    d. On the User Profile page, click on `Set Workload Password`
+    c. On the User Profile page, click on `Set Workload Password`
 
     ![Screen_Shot_Set_Workload_pw.png](images/Screen_Shot_Set_Workload_pw.png)
 
-    e. Enter a strong password, confirm it, and click on `Set Workload Password`
+    d. Enter a strong password, confirm it, and click on `Set Workload Password`
 
     ![Screen_Shot_Reset_WL_pw.png](images/Screen_Shot_Reset_WL_pw.png)
 

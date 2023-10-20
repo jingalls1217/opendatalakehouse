@@ -16,7 +16,7 @@ The primary goal of this is to build an ingestion data pipeline.
 
 - We connect to the source bucket, pull all 5 datasets, and ingest them into the CDP Data Lakehouse (using Impala in this case) for further analysis in the [Analyze](02_analyze.md) phase and ultimately into our Machine Learning Prediction Model.
 
-## Lab 1: Ingest Flights Data Needed for Analysis and Prediction
+## Lab 1: Ingest Flights Raw Data
 
 - In this lab, we will first create a **raw layer** in our Data Lakehouse. This raw layer will be created by leveraging CSV data that has already been stored in our Public Cloud storage, in this lab we will use S3, for the 5 tables mentioned above
 - This lab is meant to show how quickly you can take raw data and enable the ability to execute SQL queries against that data
@@ -111,7 +111,7 @@ The primary goal of this is to build an ingestion data pipeline.
       tblproperties("skip.header.line.count"="1");
       ```
 
-## Lab 2: Create an Open Data Lakehouse Powered by Apache Iceberg
+## Lab 2: Create an Open Data Lakehouse Powered by Apache Iceberg Needed for Analysis and Prediction
 
 - In this lab, we will ingest data from the **raw layer** we just created
 - The ingested data will be written to Iceberg tables

@@ -147,10 +147,14 @@ ORDER BY year desc, month asc;
 DESCRIBE HISTORY ${prefix}_airlines.flights;
 ```
 
-![Time Travel Snapshots](images/.png)
-
+![Time Travel Snapshots](images/TimeTravel_Describe_History.png)
+   * There are 2 rows returned
+   * Each row represents a Snapshot, snapshots are automatically created when data changes occur in a table
+      * The first row is the initial time this table was loaded in [01_ingest Lab 2](01_ingest.md#lab-2-create-an-open-data-lakehouse-powered-by-apache-iceberg-needed-for-analysis-and-prediction) this was data for flights before 2007
+      * The second row represents the data that was loaded in [Lab 2](05_iceberg.md#lab-2-partition-evolution) after Partition Evolution which is flights for year 2007
 
 2. Explore Time Travel using a relative Date Time
+   * In the `create_ts` prompt box enter at date that is greater than the 2nd row `creation_time` column
 
 ```
 SELECT year, count(*) 
@@ -159,8 +163,11 @@ FROM ${user_id}_airlines.flights
 GROUP BY year
 ORDER BY year desc;
 ```
+   * This will return all data through 2007.  This shows that you can use a relative timestamp and Iceberg will chosse the closest Snapshot to that date
+![Time Travel System Time](/images/TimeTravel_System_Time_results.png)
 
 3. Explore Time Travel using the Snapshot ID
+   * In the `snapshot_id` prompt box enter the value in the 1st row `snapshot_id` column
 
 ```
 SELECT year, count(*) 
@@ -170,6 +177,8 @@ GROUP BY year
 ORDER BY year desc;
 ```
 
+   * This will return all data through 2006.  For Snapshot
+![Time Travel System Version](/images/query.airlines.flights.png)
 
 
 ## Lab 4: Use Data Lakehouse to re-train Model

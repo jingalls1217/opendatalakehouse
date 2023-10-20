@@ -13,9 +13,23 @@ In this phase:
 ## Lab 1: Schema Evolution 
 
 1. Open HUE - SQL Editor
-steps...
+   * In your CDP Home Page, click on **Data Hub Clusters**. (For more information about Data Hub, here is a [product tour](https://www.cloudera.com/products/data-hub/cdp-tour-data-hub.html))
 
-2. In the table browser viewer (left side of screen) navigate to your `<prefix>_airlines` database
+   ![Screen_Shot_2023_04_23_at_2_27_29_PM.png](images/Screen_Shot_2023_04_23_at_2_27_29_PM.png)
+
+2. On the Data Hub Clusters landing page - 
+
+   a. Note the **Environment Name** as it will be used as one of the inputs while we create tables
+   
+   b. Click on the Data Hub called `dwarehouse`.
+
+   ![Screenshot_2023_05_31_at_5_13_05_PM.png](images/Screenshot_2023_05_31_at_5_13_05_PM.png)
+
+3. In the list of Services in the Data Hub, click on **Hue** to open a new browser tab for the Impala query user interface in Hue.
+
+   ![Screenshot_2023_05_31_at_5_13_36_PM.png](images/Screenshot_2023_05_31_at_5_13_36_PM.png)
+
+4. In the table browser viewer (left side of screen) navigate to your `<prefix>_airlines` database
    * Click `<` to the left of `default` database
 ![Table Browser default db](images/SchemaEvolution_1.png)
 
@@ -24,12 +38,12 @@ steps...
 
       * If you don't see your database, click the refresh button to the right of `Databases`
 
-3. Click `airlines` table under `Tables` to see columns in this table
+5. Click `airlines` table under `Tables` to see columns in this table
 ![Tables in Database](images/SchemaEvolution_3.png)
 
    * The current table that we created in `01_ingest` has 2 columns: `code` and `description`
 
-4. **In-place Schema Evolution Feature**
+6. **In-place Schema Evolution Feature**
 
 ```
 ALTER TABLE ${prefix}_airlines.airlines ADD COLUMNS(status STRING, updated TIMESTAMP);
@@ -39,20 +53,20 @@ ALTER TABLE ${prefix}_airlines.airlines ADD COLUMNS(status STRING, updated TIMES
 
    * The existing table data is **not modified** with this statement
 
-5. Refresh table browser to see new columns added
+7. Refresh table browser to see new columns added
    * Click on the refresh button to the right of `Tables`
    * Click `airlines` table to see the new columns: `status` and `updated`
 ![Updated Table Metadata](images/SchemaEvolution_Updated_Metadata.png)
 
 
-6. Add data into the new schema for `airlines` table
+8. Add data into the new schema for `airlines` table
 
 ```
 INSERT INTO ${prefix}_airlines.airlines
 VALUES("Z999","Adrenaline Airways","NEW",now());
 ```
 
-7. Query `airlines` table to see old and new schema data
+9. Query `airlines` table to see old and new schema data
 
 ```
 SELECT * FROM airlines WHERE code > "Z";
@@ -183,12 +197,22 @@ ORDER BY year desc;
 
 ## Lab 4: Use Data Lakehouse data for Data Processing to re-train the Model
 
-1. Open CML
-instructions....
+1. Open Cloudera Machine Learning (CML)
+
+    - If you just completed Lab 3, on your browser click on the `Cloudera Management Console` tab
+![Return to Management Console](images/Browser_Return_to_Mgmt_Console.png)
+
+    - Go back to the CDP Home Page by clicking the bento menu icon in the top left corner, click on `Home`
+![Screen_Shot_2023_04_24_at_11_33_56_PM.png](images/Screen_Shot_2023_04_24_at_11_33_56_PM.png)
+    
+    - Select the `Machine Learning` tile, and click on the available Workspace on the Machine Learning page (found under the `Workspace` column).
+![Screen_Shot_2023_04_24_at_11_42_33_PM.png](images/Screen_Shot_2023_04_24_at_11_42_33_PM.png)
+![Screen_Shot_2023_04_24_at_11_37_42_PM.png](images/Screen_Shot_2023_04_24_at_11_37_42_PM.png)
 
 2. Open Project `Canceled Flight Prediction`
-instructions....
-
+   * Click on the project `Canceled Flight Prediction` tile that was created in [00_prereqs](00_prereqs.md).
+![CDV_project_click.png](images/CDV_project_click.png)
+    
 3. Explore the Data Processing code used to train the `Canceled Flight Prediction` Model
    * Click on `Files` in left nav
 

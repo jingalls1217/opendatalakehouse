@@ -164,7 +164,7 @@ GROUP BY year
 ORDER BY year desc;
 ```
    * This will return all data through 2007.  This shows that you can use a relative timestamp and Iceberg will chosse the closest Snapshot to that date
-![Time Travel System Time](/images/TimeTravel_System_Time_results.png)
+![Time Travel System Time](images/TimeTravel_System_Time_results.png)
 
 3. Explore Time Travel using the Snapshot ID
    * In the `snapshot_id` prompt box enter the value in the 1st row `snapshot_id` column
@@ -178,26 +178,26 @@ ORDER BY year desc;
 ```
 
    * This will return all data through 2006.  For Snapshot
-![Time Travel System Version](/images/query.airlines.flights.png)
+![Time Travel System Version](images/query.airlines.flights.png)
 
 
-## Lab 4: Use Data Lakehouse to re-train Model
+## Lab 4: Use Data Lakehouse data for Data Processing to re-train the Model
 
 1. Open CML
 instructions....
 
 2. Open Project `Canceled Flight Prediction`
-
+instructions....
 
 3. Explore the Data Processing code used to train the `Canceled Flight Prediction` Model
-   * Click on Files
+   * Click on `Files` in left nav
 
    * Click on the directory `code`
-
+![Files code](images/CML_Files_Code.png)
 
 5. Open the file `3_data_processing.py` in preview
    * This is the code used to pre-process the data by wrangling the data as needed into the format to train the model
-
+![Open Preview Data Processing Python code](images/CML_Open_File_Data_Processing.png)
 
 6. Scroll to the bottom of the code until you see the following
 
@@ -220,16 +220,19 @@ if __name__ == "__main__":
    * Within this code block  you can see that it is using Evironment Variable we set when deploying the AMP
    * There are 2 in particular the DW_DATABASE and DW_TABLE, if you remember we set these to our Data Lakehouse `flights` Iceberg table
    * Please familiarize yourself with the rest of the code to see some of the data wrangling that is done here
+![Preview Data Processing Code](images/CML_view_Data_Processing_code.png)
 
+8. Click `<- Project` to return to the project
+![Return to Project](images/CML_Return_to_Project.png)
 
 8. Switch to `External` mode
-   * Click on Project Settings on the left nav
+   * Click on `Project Settings` on the left nav
    * Click on the `Advanced`
    * Under `Evnrionment Variables` change the value for the `STORAGE_MODE` to `external`
-
+![Environment Variable](images/CML_Change_Environment_Variable.png)
 
 9. Go
-   * Click on Files
+   * Click on `Files` in left nav
 
    * Click on the directory `code`
 
@@ -246,16 +249,19 @@ if __name__ == "__main__":
    * Enable Spark: make sure this is active, and select Spark 3.2.3 (minimum: Spark 3 is required for Iceberg functionality)
    * Resource Profile: select a larger profile, if available select the one for 4 vCPUs and 8 GiB Memory
    * Click `Start Session`
+![Start Data Processing Session](images/CML_Start_Session_for_Data_Processing.png)
 
+   * Click `Close` on the Connection Code Snipet
+![Close Connection Snipet](images/CML_close_connection_snipet.png)
 
 11. Click on Run > Run All
-![Run Code](images/.png)
+![Run All Lines of Code](images/CML_Data_Processing_Run_All.png)
 
    * IN the output window on the right half of the screen, you should see 
       * The schema of the `<prefix>_airlines.flights` table after it is queried into a DataFrame
       * The number of records returned from the `flights` table, value will be over 82 million
       * The schema of the input data that will be used to train the prediction model with our Data Lakehouse data
-
+![Review Output](images/CML_Review_Ouput_From_Code.png)
 
 **Conclusion:** not sure what to put here yet 
 

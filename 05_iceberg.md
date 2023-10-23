@@ -153,7 +153,7 @@ In this phase:
 
    - In the output you will see that the entire year of 2006 data needs to be scanned, which is ~127MB
 
-3. Run the explain plan on the following query for year=2007, which will be using the **new** partition we created with `year` and `month`
+7. Run the explain plan on the following query for year=2007, which will be using the **new** partition we created with `year` and `month`
 
    ```
    EXPLAIN
@@ -250,13 +250,13 @@ In this phase:
 
    ![Files code](images/CML_Files_Code.png)
 
-5. Open the file `3_data_processing.py` in preview
+4. Open the file `3_data_processing.py` in the preview
 
    - This is the code used to pre-process the data by wrangling the data as needed into the format to train the model
 
    ![Open Preview Data Processing Python code](images/CML_Open_File_Data_Processing.png)
 
-6. Scroll to the bottom of the code until you see the following
+5. Scroll to the bottom of the code until you see the following
 
    ```
    if __name__ == "__main__":
@@ -272,17 +272,17 @@ In this phase:
 
    - From this code we can see that it is checking the Environment variable `STORAGE_MODE`
 
-7. Scroll up to the line `def main():`
+6. Scroll up to the line `def main():`
 
-   - Within this code block  you can see that it is using environment variable we set when deploying the AMP
+   - Within this code block  you can see that it is using the environment variable we set when deploying the AMP
 
-   - There are 2 in particular the DW_DATABASE and DW_TABLE, if you remember we set these to our Data Lakehouse `flights` Iceberg table
+   - There are 2, in particular, the DW_DATABASE and DW_TABLE, if you remember we set these to our Data Lakehouse `flights` Iceberg table
 
    - Please familiarize yourself with the rest of the code to see some of the data wrangling that is done here
 
    ![Preview Data Processing Code](images/CML_view_Data_Processing_code.png)
 
-8. Click `<- Project` to return to the project
+7. Click `<- Project` to return to the project
 
    ![Return to Project](images/CML_Return_to_Project.png)
 
@@ -296,7 +296,7 @@ In this phase:
 
    ![Environment Variable](images/CML_Change_Environment_Variable.png)
 
-9. Go
+9. Go back to the code
    
    - Click on `Files` in left nav
 
@@ -327,7 +327,7 @@ In this phase:
 
    ![Start Data Processing Session](images/CML_Start_Session_for_Data_Processing.png)
 
-   - Click `Close` on the Connection Code Snipet
+   - Click `Close` on the Connection Code Snippet
 
    ![Close Connection Snipet](images/CML_close_connection_snipet.png)
 
@@ -335,13 +335,20 @@ In this phase:
 
    ![Run All Lines of Code](images/CML_Data_Processing_Run_All.png)
 
-   - IN the output window on the right half of the screen, you should see 
+   - In the output window on the right half of the screen, you should see 
 
       - The schema of the `<prefix>_airlines.flights` table after it is queried into a DataFrame
-      - The number of records returned from the `flights` table, value will be over 82 million
+      - The number of records returned from the `flights` table; the value will be over 82 million
       - The schema of the input data that will be used to train the prediction model with our Data Lakehouse data
 
    ![Review Output](images/CML_Review_Ouput_From_Code.png)
 
-**Conclusion:** not sure what to put here yet 
+## Conclusion
 
+To learn more about how Cloudera supports Modern Data Architectures with our Open Data Lakehouse powered by Apache Iceberg, visit https://www.cloudera.com/products/open-data-lakehouse.html.
+
+Learn how to unlock your data's potential and -
+
+- Run advanced, multi-function analytics at a massive scale on all your data, structured and unstructured
+- Eliminate data silos and enable data teams to collaborate on the same data with the tools of their choice on any cloud, public or private
+- Seamlessly integrate Iceberg tables into your existing architecture, while ensuring unified data security and governance

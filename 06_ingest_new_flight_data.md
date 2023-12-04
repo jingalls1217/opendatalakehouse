@@ -1,8 +1,16 @@
 # Ingesting New Flight Data
 
-TBD -- introduction/overview section to be added to tee up this module
+In this `Ingesting New Flight Data` module, you will supplement the data ingested from AWS S3 in the [01_ingest](01_ingest.md) phase by ingesting more recent airline data. To do this, you will:
+
+- Import an existing data flow
+- Get an overview of Cloudera Flow Management (CFM) and the imported data flow
+- Configure and run the imported data flow 
+
+CFM is a no-code data ingestion and management solution powered by Apache NiFi. With NiFi’s intuitive graphical interface and processors, CFM delivers highly scalable data movement, transformation, and management capabilities to the enterprise.
 
 # Import Flow Definition
+
+To import a data flow into CFM, the first thing we need to do is import a flow definition file.
 
 1. Open a web browser and go to https://github.com/cdp-trial-patterns/opendatalakehouse
 
@@ -22,11 +30,10 @@ TBD -- introduction/overview section to be added to tee up this module
 
     ![Process Group Browse](images/nifi_process_group.png)
 
-# Flow Definition Overview
+# Flow Management Data Flow Overview
 
-TBD - A sentence or two description about what this section will cover.
+Now that we have imported a flow definition file into CFM, let's rewind to understand how we got here. This is a previously created, fully functional data flow, similar to a [ReadyFlow](https://docs.cloudera.com/dataflow/cloud/howto-using-readyflows.html) template available in [DataFlow for the Public Cloud](https://www.cloudera.com/products/dataflow.html).
 
-- Mention that this is an already completed data flow, similar to the ReadyFlow templates in our Cloudera Data Flow (CDF) Public Cloud data service.
 
 - Show the toolbox first
     - Talk about how it got built -- this is a drag-and-drop of processors that you see on the screen
